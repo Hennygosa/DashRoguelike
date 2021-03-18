@@ -7,6 +7,7 @@ public class DashMove : MonoBehaviour
 {
     private Rigidbody rb;
     public Camera cam;
+    public float maxSwipeLenght;
     Vector3 touchPos;
     Vector3 releasePos;
     Vector3 swipeVector;
@@ -50,15 +51,15 @@ public class DashMove : MonoBehaviour
                     }
                     releasePos.y = 0;   
                     swipeVector = releasePos - touchPos;   //movement vector
-                    transform.position += swipeVector;
+                    transform.position += Vector3.ClampMagnitude(swipeVector, maxSwipeLenght);
                     Debug.Log("release at" + releasePos);
                     break;
             }
         }
     }
-    private void FixedUpdate()
-    {
-            Vector3 postMove = Vector3.Lerp(transform.position, transform.position += swipeVector, 0.125f);
-            transform.position = postMove;
-    }
+    //private void FixedUpdate()
+    //{
+    //        Vector3 postMove = Vector3.Lerp(transform.position, transform.position += swipeVector, 0.125f);
+    //        transform.position = postMove;
+    //}
 }
