@@ -2,9 +2,15 @@ using UnityEngine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Timers;
 
 public class DashMove : MonoBehaviour
 {
+    public enemyScript enemy;
+    public PlayerBehaviour player;
+    private double playerDamage = 1.2;
+
+
     public float maxSwipeLenght, speed;
     Vector3 touchPos, releasePos, swipeVector, seckondPoint;
     private Rigidbody rbody;
@@ -69,14 +75,10 @@ public class DashMove : MonoBehaviour
             transform.position = startPosition;
             seckondPoint = startPosition;
         }
+
+        if (col.collider.tag == "enemy")
+        {
+            col.collider.gameObject.GetComponent<enemyScript>().getDamage(playerDamage); 
+        }
     }
-    //void OnCollisionEnter(Collision collision)
-    //{
-
-    //    if (collision.collider.gameObject.tag != "Player")
-    //    {
-    //        Physics.IgnoreCollision(collision.collider, GetComponent<Collider>());
-    //    }
-
-    //}
 }

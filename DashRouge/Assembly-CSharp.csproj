@@ -54,6 +54,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripst\DashMove.cs" />
+    <Compile Include="Assets\enemyScript.cs" />
+    <Compile Include="Assets\PlayerBehaviour.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
