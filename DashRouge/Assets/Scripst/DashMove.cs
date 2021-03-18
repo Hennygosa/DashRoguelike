@@ -5,37 +5,53 @@ using System.Collections.Generic;
 
 public class DashMove : MonoBehaviour
 {
-    private float deltaX, deltaY;
-    private Rigidbody2D rb;
+    private Rigidbody rb;
     public Camera cam;
-    private Vector2 landPoint;
+    Vector3 touchPos;
+    Vector3 releasePos;
+    Vector3 swipeVector;
     void Start()
     {
         cam = Camera.main;
-        rb = GetComponent<Rigidbody2D>();
+        rb = GetComponent<Rigidbody>();
     }
 
     void Update()
+    {
+        Dash();
+    }
+
+    void Dash()
     {
         if (Input.touchCount > 0)
         {
             Touch touch = Input.GetTouch(0);
 
-            Vector2 touchPos = cam.ScreenToWorldPoint(touch.position);
-
             switch (touch.phase)
             {
                 case TouchPhase.Began:
-                    deltaX = touchPos.x - transform.position.x;
-                    deltaY = touchPos.y - transform.position.y;
-                    break;
-
-                case TouchPhase.Moved:
-                    landPoint = new Vector2(touchPos.x - deltaX, touchPos.y - deltaY);
+                    Ray ray = Camera.main.ScreenPointToRay(touch.position);
+                    Debug.DrawRay(transform.position, transform.forward * 100f, Color.yellow);
+                    RaycastHit hit;
+                    if (Physics.Raycast(ray, out hit))
+                    {
+                        touchPos = hit.point;  //touch position
+                    }
+                    touchPos.y = 0; //y = 0 prevent flying 
+                    Debug.Log("touch at" + touchPos);
                     break;
 
                 case TouchPhase.Ended:
-                    rb.MovePosition(landPoint);
+                    Ray ray1 = Camera.main.ScreenPointToRay(touch.position);                  
+                    RaycastHit hit2;
+                    if (Physics.Raycast(ray1, out hit2))
+                    {
+                        releasePos = hit2.point;
+                    }
+                    releasePos.y = 0;   
+                    swipeVector = releasePos - touchPos;   //movement vector
+                    transform.position += swipeVector;
+                    Debug.Log("release at" + releasePos);
                     break;
             }
         }
