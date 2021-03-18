@@ -26,13 +26,14 @@ public class DashMove : MonoBehaviour
         if (Input.touchCount > 0)
         {
             Touch touch = Input.GetTouch(0);
+            Ray ray = Camera.main.ScreenPointToRay(touch.position);
+            Debug.DrawRay(transform.position, transform.forward * 100f, Color.yellow);
+            RaycastHit hit;
 
             switch (touch.phase)
             {
                 case TouchPhase.Began:
-                    Ray ray = Camera.main.ScreenPointToRay(touch.position);
-                    Debug.DrawRay(transform.position, transform.forward * 100f, Color.yellow);
-                    RaycastHit hit;
+                    
                     if (Physics.Raycast(ray, out hit))
                     {
                         touchPos = hit.point;  //touch position
@@ -42,11 +43,10 @@ public class DashMove : MonoBehaviour
                     break;
 
                 case TouchPhase.Ended:
-                    Ray ray1 = Camera.main.ScreenPointToRay(touch.position);                  
-                    RaycastHit hit2;
-                    if (Physics.Raycast(ray1, out hit2))
+                    
+                    if (Physics.Raycast(ray, out hit))
                     {
-                        releasePos = hit2.point;
+                        releasePos = hit.point;
                     }
                     releasePos.y = 0;   
                     swipeVector = releasePos - touchPos;   //movement vector
@@ -55,5 +55,10 @@ public class DashMove : MonoBehaviour
                     break;
             }
         }
+    }
+    private void FixedUpdate()
+    {
+            Vector3 postMove = Vector3.Lerp(transform.position, transform.position += swipeVector, 0.125f);
+            transform.position = postMove;
     }
 }
