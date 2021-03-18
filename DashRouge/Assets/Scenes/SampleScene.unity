@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44529986, g: 0.49493992, b: 0.57394, a: 1}
+  m_IndirectSpecularColor: {r: 0.4452998, g: 0.49493986, b: 0.57393986, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -248,8 +248,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff9c8d4f7be7aa24593fbe0abd5453d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxSwipeLenght: 10
+  maxSwipeLenght: 16
   speed: 0.15
+  reflectedObject: {fileID: 0}
 --- !u!4 &622155744
 Transform:
   m_ObjectHideFlags: 0
@@ -505,7 +506,7 @@ GameObject:
   - component: {fileID: 1646061919}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -535,7 +536,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 1.1, y: 1.1, z: 1.1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &1646061920
 MeshRenderer:

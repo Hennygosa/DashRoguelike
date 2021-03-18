@@ -8,7 +8,9 @@ public class DashMove : MonoBehaviour
     public float maxSwipeLenght, speed;
     Vector3 touchPos, releasePos, swipeVector, seckondPoint;
     private Rigidbody rbody;
-    bool nigger;
+    private Vector3 startPosition = Vector3.zero;
+    public Transform reflectedObject;
+
     private void Start()
     {
         rbody = GetComponent<Rigidbody>();
@@ -16,6 +18,7 @@ public class DashMove : MonoBehaviour
 
     void Update()
     {
+        startPosition = transform.position;
         Dash();
     }
 
@@ -31,7 +34,7 @@ public class DashMove : MonoBehaviour
             switch (touch.phase)
             {
                 case TouchPhase.Began:
-                    
+
                     if (Physics.Raycast(ray, out hit))
                     {
                         touchPos = hit.point;  //touch position
@@ -41,29 +44,39 @@ public class DashMove : MonoBehaviour
                     break;
 
                 case TouchPhase.Ended:
-                    
+
                     if (Physics.Raycast(ray, out hit))
                     {
                         releasePos = hit.point;
                     }
-                    releasePos.y = 0;   
+                    releasePos.y = 0;
                     swipeVector = releasePos - touchPos;//movement vector
                     seckondPoint = transform.position + Vector3.ClampMagnitude(swipeVector, maxSwipeLenght);
                     Debug.Log("release at" + releasePos);
                     break;
-            }        
-        }    
+            }
+        }
     }
     public void FixedUpdate()
     {
         Vector3 postMove = Vector3.Lerp(transform.position, seckondPoint, speed);
         transform.position = postMove;
     }
-    public void OnCollisionEnter (Collision col)
+    public void OnCollisionEnter(Collision col)
     {
-        if (col.collider.name == "wall")
-        { 
-
+        if (col.collider.tag == "wall")
+        {
+            transform.position = startPosition;
+            seckondPoint = startPosition;
         }
     }
+    //void OnCollisionEnter(Collision collision)
+    //{
+
+    //    if (collision.collider.gameObject.tag != "Player")
+    //    {
+    //        Physics.IgnoreCollision(collision.collider, GetComponent<Collider>());
+    //    }
+
+    //}
 }

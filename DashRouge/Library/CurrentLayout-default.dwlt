@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 1920
     height: 997
   m_ShowMode: 4
-  m_Title: Scene
+  m_Title: Game
   m_RootView: {fileID: 2}
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
@@ -123,7 +123,7 @@ MonoBehaviour:
   m_MinSize: {x: 911, y: 563}
   m_MaxSize: {x: 22006, y: 12063}
   vertical: 0
-  controlID: 159
+  controlID: 27
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -149,7 +149,7 @@ MonoBehaviour:
   m_MinSize: {x: 201, y: 563}
   m_MaxSize: {x: 4001, y: 12063}
   vertical: 1
-  controlID: 75
+  controlID: 143
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -279,7 +279,7 @@ MonoBehaviour:
   m_MinSize: {x: 508, y: 271}
   m_MaxSize: {x: 14003, y: 10021}
   vertical: 0
-  controlID: 160
+  controlID: 28
 --- !u!114 &12
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -325,8 +325,8 @@ MonoBehaviour:
     y: 0
     width: 276
     height: 947
-  m_MinSize: {x: 275, y: 50}
-  m_MaxSize: {x: 4000, y: 4000}
+  m_MinSize: {x: 276, y: 71}
+  m_MaxSize: {x: 4001, y: 4021}
   m_ActualView: {fileID: 20}
   m_Panes:
   - {fileID: 20}
@@ -457,9 +457,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: -90.12002, y: -84.936516, z: 283.8845}
+    m_Target: {x: -151.88908, y: -270.22684, z: -20.22256}
     speed: 2
-    m_Value: {x: -90.12002, y: -84.936516, z: 283.8845}
+    m_Value: {x: -151.88908, y: -270.22684, z: -20.22256}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -506,13 +506,13 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: -0.13121702, y: 0.17949526, z: -0.024139572, w: -0.9747324}
+    m_Target: {x: -0.33482638, y: 0.6449423, z: -0.37511685, w: -0.57564515}
     speed: 2
-    m_Value: {x: -0.12974685, y: 0.1795203, z: -0.023868779, w: -0.97486854}
+    m_Value: {x: -0.33480307, y: 0.6448974, z: -0.37509075, w: -0.5756051}
   m_Size:
-    m_Target: 178.2448
+    m_Target: 163.64078
     speed: 2
-    m_Value: 178.2448
+    m_Value: 163.64078
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -615,9 +615,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 063a0000
-      m_LastClickedID: 14854
-      m_ExpandedIDs: 38fbffff063a0000183a0000
+      m_SelectedIDs: 1a3a0000
+      m_LastClickedID: 14874
+      m_ExpandedIDs: 52fbffff003a0000163a0000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -687,14 +687,14 @@ MonoBehaviour:
   m_LastFolders:
   - Assets/Scripst
   m_LastFoldersGridSize: -1
-  m_LastProjectPath: C:\Users\nohri\Desktop\DashRoguelike\DashRouge
+  m_LastProjectPath: "A:\\\u043F\u0440\u043E\u0435\u043A\u0442 \u0440\u043E\u0433\u0430\u043B\u0438\u043A\\DashRoguelike\\DashRouge"
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 723a0000
     m_LastClickedID: 14962
-    m_ExpandedIDs: 00000000643a000000ca9a3b
+    m_ExpandedIDs: 000000006a3a000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -722,7 +722,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000643a0000
+    m_ExpandedIDs: 000000006a3a0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -749,7 +749,7 @@ MonoBehaviour:
   m_ListAreaState:
     m_SelectedInstanceIDs: 
     m_LastClickedInstanceID: 0
-    m_HadKeyboardFocusLastEvent: 0
+    m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs: c6230000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
