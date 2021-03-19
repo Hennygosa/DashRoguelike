@@ -78,7 +78,7 @@ public class DashMove : MonoBehaviour
 
         if (col.collider.tag == "enemy")
         {
-            col.collider.gameObject.GetComponent<enemyScript>().getDamage(playerDamage); 
+            col.collider.gameObject.GetComponent<enemyScript>().takeDamage(playerDamage); 
         }
     }
 }

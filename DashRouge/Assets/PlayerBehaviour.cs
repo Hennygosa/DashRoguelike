@@ -4,18 +4,12 @@ using UnityEngine;
 
 public class PlayerBehaviour : MonoBehaviour
 {
-    public double health = 3.3;
-    public double playerDamage = 1.2;
+    public double health = 10;
+    public double playerDamage = 2;
     // Start is called before the first frame update
     void Start()
     {
-        health = 3;
-        playerDamage = 1.2;
-    }
-
-    public double getplayerDamage()
-    {
-        return playerDamage;
+        
     }
 
     // Update is called once per frame
@@ -28,12 +22,8 @@ public class PlayerBehaviour : MonoBehaviour
             Debug.LogError("—Ã›–“‹");
         }
     }
-    public void OnCollisionEnter(Collision col)
-    {
-
-    }
-
-    public void getDamage(double damage)
+    
+    public void takeDamage(double damage)
     {
         health -= damage;
     }
