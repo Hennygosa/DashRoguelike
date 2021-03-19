@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerBehaviour : MonoBehaviour
 {
     public double health = 10;
-    public double playerDamage = 0;
+    public static double playerDamage = 1;
     // Start is called before the first frame update
     void Start()
     {
@@ -26,5 +26,6 @@ public class PlayerBehaviour : MonoBehaviour
     public void takeDamage(double damage)
     {
         health -= damage;
+        Debug.Log("получил урон игрок, хп =" + health);
     }
 }

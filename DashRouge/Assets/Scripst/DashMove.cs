@@ -6,24 +6,54 @@ using System.Timers;
 
 public class DashMove : MonoBehaviour
 {
+    private Queue<bool> isMoving = new Queue<bool>();
     public enemyScript enemy;
     public PlayerBehaviour player;
     private double playerDamage = 1.2;
-
+    private Vector3 lastPosition;
+    private Queue<Vector3> kostil = new Queue<Vector3>();
 
     public float maxSwipeLenght, speed;
-    Vector3 touchPos, releasePos, swipeVector, seckondPoint;
+    private Vector3 touchPos, releasePos, swipeVector, seckondPoint, startPosition; //= Vector3.zero
     private Rigidbody rbody;
-    private Vector3 startPosition = Vector3.zero;
     public Transform reflectedObject;
 
     private void Start()
     {
+        speed = 0.05f;
         rbody = GetComponent<Rigidbody>();
+        lastPosition = transform.position;
+        isMoving.Enqueue(false);// пока 5 кадра пусть будет
+        isMoving.Enqueue(false);//
+        isMoving.Enqueue(false);//
+        isMoving.Enqueue(false);//
+        isMoving.Enqueue(false);//
+
+
+        kostil.Enqueue(Vector3.zero);// костыль
+        kostil.Enqueue(Vector3.zero);// костыль
+        kostil.Enqueue(Vector3.zero);// костыль
+        kostil.Enqueue(Vector3.zero);// костыль
     }
 
     void Update()
     {
+        kostil.Enqueue(transform.position);// костыль
+        kostil.Dequeue();// костыль
+        if (transform.position != lastPosition)
+        {
+            isMoving.Enqueue(true);
+            isMoving.Dequeue();
+            Debug.Log("двигаетс€");
+        }
+        else
+        {
+            isMoving.Enqueue(false);
+            isMoving.Dequeue();
+            Debug.Log("не двигаетс€");
+        }
+
+        lastPosition = transform.position;
         startPosition = transform.position;
         Dash();
     }
@@ -45,7 +75,7 @@ public class DashMove : MonoBehaviour
                     {
                         touchPos = hit.point;  //touch position
                     }
-                    touchPos.y = 0; //y = 0 prevent flying 
+                    touchPos.y = 0;  //y = 0 prevent flying 
                     break;
 
                 case TouchPhase.Ended:
@@ -55,7 +85,7 @@ public class DashMove : MonoBehaviour
                         releasePos = hit.point;
                     }
                     releasePos.y = 0;
-                    swipeVector = releasePos - touchPos;//movement vector
+                    swipeVector = releasePos - touchPos; //movement vector
                     seckondPoint = transform.position + Vector3.ClampMagnitude(swipeVector, maxSwipeLenght);
                     break;
             }
@@ -68,15 +98,30 @@ public class DashMove : MonoBehaviour
     }
     public void OnCollisionEnter(Collision col)
     {
-        if (col.collider.tag == "wall")
+        switch (col.collider.tag)
         {
-            transform.position = startPosition;
-            seckondPoint = startPosition;
-        }
+            case "wall":
+                var kostil2 = kostil.Dequeue();// костыль
+                transform.position = kostil2;// костыль
+                seckondPoint = kostil2;// костыль
+                kostil.Clear();// костыль
+                kostil.Enqueue(transform.position);// костыль
+                kostil.Enqueue(transform.position);// костыль
+                kostil.Enqueue(transform.position);// костыль
+                kostil.Enqueue(transform.position);// костыль
 
-        if (col.collider.tag == "enemy")
-        {
-            col.collider.gameObject.GetComponent<enemyScript>().takeDamage(playerDamage); 
-        }
+                break;
+
+            case "enemy":
+                foreach(var i in isMoving)
+                {
+                    if (i == true)
+                    {
+                        Debug.Log("ƒ¬»√ј≈“—я –яƒќћ — ¬–ј√ќћ, хп врага: " + col.collider.gameObject.GetComponent<enemyScript>().health);
+                        col.collider.gameObject.GetComponent<enemyScript>().takeDamage(playerDamage);
+                    }
+                }
+                break;
+        }     
     }
 }

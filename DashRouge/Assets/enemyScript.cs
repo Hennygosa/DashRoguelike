@@ -11,10 +11,10 @@ public class enemyScript : MonoBehaviour
     NavMeshAgent agent;
 
     public double health = 2;
-    public double attackDamage = 3.1;
-    public double aggroRange = 5;
-    public double attackRange = 3;
-    public double attackRate = 1;
+    private double attackDamage = 3.1;
+    private double aggroRange = 20;
+    private double attackRange = 3;
+    private double attackRate = 1;
     private double attackCountdown = 0;
     // Start is called before the first frame update
     void Start()
@@ -62,6 +62,7 @@ public class enemyScript : MonoBehaviour
 
         if (distanceToPlayer <= aggroRange)
         {
+            agent.isStopped = false;
             agent.SetDestination(player.transform.position);
         }
     }
