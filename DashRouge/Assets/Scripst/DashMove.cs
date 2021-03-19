@@ -46,7 +46,6 @@ public class DashMove : MonoBehaviour
                         touchPos = hit.point;  //touch position
                     }
                     touchPos.y = 0; //y = 0 prevent flying 
-                    Debug.Log("touch at" + touchPos);
                     break;
 
                 case TouchPhase.Ended:
@@ -58,7 +57,6 @@ public class DashMove : MonoBehaviour
                     releasePos.y = 0;
                     swipeVector = releasePos - touchPos;//movement vector
                     seckondPoint = transform.position + Vector3.ClampMagnitude(swipeVector, maxSwipeLenght);
-                    Debug.Log("release at" + releasePos);
                     break;
             }
         }

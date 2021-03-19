@@ -38,16 +38,11 @@ public class enemyScript : MonoBehaviour
             attackCountdown = 1 / attackRate;
         }
         attackCountdown -= Time.deltaTime;
+        if (distance < attackRange)
+        {
+            Stop();
+        }
     }
-
-    //public void OnCollisionEnter(Collision col)
-    //{
-    //    if ((col.collider.tag == "player") && (new System.Random().Next(0, 100) > 50))
-    //    {
-    //        Debug.Log("ударило");
-    //        col.collider.gameObject.GetComponent<PlayerBehaviour>().getDamage(enemyDamage);
-    //    }
-    //}
 
     public void takeDamage(double damage)
     {
@@ -69,5 +64,10 @@ public class enemyScript : MonoBehaviour
         {
             agent.SetDestination(player.transform.position);
         }
+    }
+
+    void Stop()
+    {
+        agent.isStopped = true;
     }
 }
