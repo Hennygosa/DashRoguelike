@@ -20,6 +20,7 @@ public class DashMove : MonoBehaviour
     public Transform reflectedObject;
 
 
+    
     public bool bounce;
     List<Vector3> movePoints = new List<Vector3>();
     public int Raycount = 2;
@@ -94,6 +95,7 @@ public class DashMove : MonoBehaviour
                     releasePos.y = 0;
                     swipeVector = releasePos - touchPos;//movement vector
                     maximaseSwipe = Vector3.ClampMagnitude(swipeVector, maxSwipeLenght);
+                    oldPos = transform.position;
                     if (bounce)
                         CastRay(transform.position, maximaseSwipe, oldPos);
                     else NoBounceMetod();
