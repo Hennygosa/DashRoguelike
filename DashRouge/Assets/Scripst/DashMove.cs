@@ -167,7 +167,7 @@ public class DashMove : MonoBehaviour
                 movePoints.Clear();
             }
         }
-
+        Debug.Log(seckondPoint);
         transform.position = Vector3.MoveTowards(transform.position, seckondPoint, speed);
     }
     public void OnCollisionEnter(Collision col)
