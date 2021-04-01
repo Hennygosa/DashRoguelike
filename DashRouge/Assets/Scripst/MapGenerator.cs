@@ -358,9 +358,7 @@ public class MapGenerator : MonoBehaviour
         //random seed
         if (useRandomSeed)
         {
-            //seed = Time.time.ToString();
             seed = DateTime.Now.ToString();
-            Debug.Log(seed);
         }
         
         //specific seed

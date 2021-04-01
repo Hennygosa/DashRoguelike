@@ -15,7 +15,7 @@ public class DashMove : MonoBehaviour
 
 
     public float maxSwipeLenght, speed;
-    private Vector3 touchPos, releasePos, swipeVector, seckondPoint, startPosition, oldPos, maximaseSwipe; //= Vector3.zero
+    private Vector3 touchPos, releasePos, swipeVector, secondPoint, startPosition, oldPos, maximaseSwipe; //= Vector3.zero
     private Rigidbody rbody;
     public Transform reflectedObject;
 
@@ -53,13 +53,13 @@ public class DashMove : MonoBehaviour
         {
             isMoving.Enqueue(true);
             isMoving.Dequeue();
-            Debug.Log("двигается");
+            //Debug.Log("двигается");
         }
         else
         {
             isMoving.Enqueue(false);
             isMoving.Dequeue();
-            Debug.Log("не двигается");
+            //Debug.Log("не двигается");
         }
 
         lastPosition = transform.position;
@@ -107,19 +107,19 @@ public class DashMove : MonoBehaviour
     private void NoBounceMetod()
     {
         oldPos = transform.position;
-        seckondPoint = transform.position + maximaseSwipe;
+        secondPoint = transform.position + maximaseSwipe;
 
         Debug.DrawRay(transform.position, maximaseSwipe, Color.red);
         Ray objectRay = new Ray(transform.position, maximaseSwipe);
         RaycastHit hit2;
         if (Physics.Raycast(objectRay, out hit2, maximaseSwipe.magnitude, colMask))
         {
-            seckondPoint = hit2.point - maximaseSwipe.normalized / 10;
+            secondPoint = hit2.point - maximaseSwipe.normalized / 10;
             Debug.Log("hit");
         }
         else
         {
-            seckondPoint = oldPos + maximaseSwipe;
+            secondPoint = oldPos + maximaseSwipe;
             Debug.Log("no");
         }
     }
@@ -154,21 +154,21 @@ public class DashMove : MonoBehaviour
     {
         if (movePoints.Count == 1)
         {
-            seckondPoint = movePoints[0];
+            secondPoint = movePoints[0];
             movePoints.Clear();
         }
         if (movePoints.Count != 0)
         {
-            seckondPoint = movePoints[flag];
-            if (transform.position == seckondPoint) flag++;
+            secondPoint = movePoints[flag];
+            if (transform.position == secondPoint) flag++;
             if (transform.position == movePoints[movePoints.Count - 1])
             {
                 flag = 0;
                 movePoints.Clear();
             }
         }
-        Debug.Log(seckondPoint);
-        transform.position = Vector3.MoveTowards(transform.position, seckondPoint, speed);
+        if (secondPoint != Vector3.zero)
+            transform.position = Vector3.MoveTowards(transform.position, secondPoint, speed);
     }
     public void OnCollisionEnter(Collision col)
     {
