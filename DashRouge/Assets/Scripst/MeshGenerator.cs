@@ -86,6 +86,8 @@ public class MeshGenerator : MonoBehaviour
 
 		MeshCollider wallCollider = walls.gameObject.AddComponent<MeshCollider>();
 		wallCollider.sharedMesh = wallMesh;
+
+
 	}
 
 	//draw triangles

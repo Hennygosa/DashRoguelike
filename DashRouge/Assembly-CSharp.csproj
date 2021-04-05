@@ -62,6 +62,7 @@
     <Compile Include="Assets\Scripst\enemyScript.cs" />
     <Compile Include="Assets\Scripst\PlayerBehaviour.cs" />
     <Compile Include="Assets\Scripst\MeshGenerator.cs" />
+    <Compile Include="Assets\Scripst\SceneChange.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

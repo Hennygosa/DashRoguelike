@@ -378,6 +378,11 @@ public class MapGenerator : MonoBehaviour
                 {
                     map[x, y] = 0;
                 }
+                //center top - exit point
+                else if (x >= width / 2 - 5 && x <= width / 2 + 5 && y > height - 10 && y < height)
+                {
+                    map[x, y] = 0;
+                }
                 //non-borders are randomly generated
                 else
                 {
