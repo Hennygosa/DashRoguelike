@@ -43,6 +43,17 @@ public class MeshGenerator : MonoBehaviour
 		mesh.triangles = triangles.ToArray();
 		mesh.RecalculateNormals();
 
+		//texturizing cave
+		int tileAmount = 10;
+		Vector2[] uvs = new Vector2[vertices.Count];
+		for (int i = 0; i < vertices.Count; i++)
+		{
+			float percentX = Mathf.InverseLerp(-map.GetLength(0) / 2 * squareSize, map.GetLength(0) / 2 * squareSize, vertices[i].x) * tileAmount;
+			float percentY = Mathf.InverseLerp(-map.GetLength(1) / 2 * squareSize, map.GetLength(1) / 2 * squareSize, vertices[i].z) * tileAmount;
+			uvs[i] = new Vector2(percentX, percentY);
+		}
+		mesh.uv = uvs;
+
 		if (!is2D)
 		{
 			CreateWallMesh();
@@ -80,14 +91,28 @@ public class MeshGenerator : MonoBehaviour
 				wallTriangles.Add(startIndex + 0);
 			}
 		}
+
+		walls.mesh = wallMesh;
+
 		wallMesh.vertices = wallVertices.ToArray();
 		wallMesh.triangles = wallTriangles.ToArray();
-		walls.mesh = wallMesh;
+		wallMesh.RecalculateNormals();
+		
+
+		//texturizing walls
+		int tileAmount = 10;
+		Vector2[] uvs = new Vector2[wallVertices.Count];
+		for (int i = 0; i < wallVertices.Count; i++)
+		{
+			float percentX = Mathf.InverseLerp(-75 / 2, 75 / 2, wallVertices[i].x) * tileAmount;
+			float percentY = Mathf.InverseLerp(-35 / 2, 35 / 2, wallVertices[i].y) * tileAmount;
+			uvs[i] = new Vector2(percentX, percentY);
+		}
+		Debug.Log("WallMeshArraySize: " + wallMesh.uv.Length);
+		wallMesh.uv = uvs;
 
 		MeshCollider wallCollider = walls.gameObject.AddComponent<MeshCollider>();
 		wallCollider.sharedMesh = wallMesh;
-
-
 	}
 
 	//draw triangles
