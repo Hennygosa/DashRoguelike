@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 1920
     height: 997
   m_ShowMode: 4
-  m_Title: Hierarchy
+  m_Title: Game
   m_RootView: {fileID: 6}
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
@@ -227,7 +227,7 @@ MonoBehaviour:
   m_MinSize: {x: 1113, y: 342}
   m_MaxSize: {x: 26008, y: 10021}
   vertical: 0
-  controlID: 82
+  controlID: 77
 --- !u!114 &10
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -252,7 +252,7 @@ MonoBehaviour:
   m_MinSize: {x: 404, y: 342}
   m_MaxSize: {x: 8004, y: 8042}
   vertical: 1
-  controlID: 166
+  controlID: 113
 --- !u!114 &11
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -325,8 +325,8 @@ MonoBehaviour:
     y: 0
     width: 281
     height: 947
-  m_MinSize: {x: 276, y: 71}
-  m_MaxSize: {x: 4001, y: 4021}
+  m_MinSize: {x: 275, y: 50}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 21}
   m_Panes:
   - {fileID: 21}
@@ -427,18 +427,18 @@ MonoBehaviour:
       y: 21
       width: 623
       height: 616
-    m_Scale: {x: 1.753505, y: 1.7535052}
-    m_Translation: {x: 311.5, y: 239.87462}
+    m_Scale: {x: 1.460621, y: 1.460621}
+    m_Translation: {x: 311.5, y: 264.6418}
     m_MarginLeft: 0
     m_MarginRight: 0
     m_MarginTop: 0
     m_MarginBottom: 0
     m_LastShownAreaInsideMargins:
       serializedVersion: 2
-      x: -177.64421
-      y: -136.79721
-      width: 355.28842
-      height: 351.29636
+      x: -213.26546
+      y: -181.18445
+      width: 426.5309
+      height: 421.73843
     m_MinimalGUI: 1
   m_defaultScale: 1
   m_LastWindowPixelSize: {x: 623, y: 637}
@@ -483,9 +483,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 19.73301, y: -99.41366, z: 55.90515}
+    m_Target: {x: 3.7943144, y: -78.579384, z: 74.98921}
     speed: 2
-    m_Value: {x: 19.73301, y: -99.41366, z: 55.90515}
+    m_Value: {x: 3.7943144, y: -78.579384, z: 74.98921}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -532,13 +532,13 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: -0.3625293, y: -0.07756098, z: 0.030393943, w: -0.92834145}
+    m_Target: {x: -0.30995703, y: -0.03218696, z: 0.010605294, w: -0.9502417}
     speed: 2
-    m_Value: {x: -0.3624958, y: -0.077553816, z: 0.030391136, w: -0.9282557}
+    m_Value: {x: -0.30992898, y: -0.032184046, z: 0.010604335, w: -0.95015574}
   m_Size:
-    m_Target: 86.92144
+    m_Target: 118.28806
     speed: 2
-    m_Value: 86.92144
+    m_Value: 118.28806
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -641,9 +641,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 
-      m_LastClickedID: 0
-      m_ExpandedIDs: 52fbffff7e3a0000
+      m_SelectedIDs: bc3a0000
+      m_LastClickedID: 15036
+      m_ExpandedIDs: 20fbffffbc3a0000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -705,22 +705,22 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Materials/Normal
+    - Assets/Scripst
     m_Globs: []
     m_OriginalText: 
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Materials/Normal
+  - Assets/Scripst
   m_LastFoldersGridSize: -1
-  m_LastProjectPath: D:\PROJECT\Henny\Documents\GitHub\DashRoguelike\DashRouge
+  m_LastProjectPath: "A:\\\u043F\u0440\u043E\u0435\u043A\u0442 \u0440\u043E\u0433\u0430\u043B\u0438\u043A\\DashRoguelike\\DashRouge"
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 183b0000
-    m_LastClickedID: 15128
-    m_ExpandedIDs: 00000000ec3a0000f23a000000ca9a3b
+    m_SelectedIDs: 7c3b0000
+    m_LastClickedID: 15228
+    m_ExpandedIDs: 00000000703b000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -748,7 +748,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000ec3a0000
+    m_ExpandedIDs: 00000000703b0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 

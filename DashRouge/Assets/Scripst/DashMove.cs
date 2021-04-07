@@ -10,45 +10,31 @@ public class DashMove : MonoBehaviour
     public enemyScript enemy;
     public PlayerBehaviour player;
     private double playerDamage = 1.2;
-    private Vector3 lastPosition;
-    private Queue<Vector3> kostil = new Queue<Vector3>();
 
 
-    public float maxSwipeLenght, speed;
-    private Vector3 touchPos, releasePos, swipeVector, secondPoint, startPosition, oldPos, maximaseSwipe; //= Vector3.zero
-    private Rigidbody rbody;
-    public Transform reflectedObject;
-
-
-    
-    public bool bounce;
-    List<Vector3> movePoints = new List<Vector3>();
-    public int Raycount = 2;
-    int flag = 0;
+    Vector3 lastPosition;
+    public float Speed = 0.00000000001f;
+    public float maxSwipeLenght;
+    private float dashTime;
+    public static float StartDashTime = 3f;
+    private Vector3 touchPos, releasePos, swipeVector, seckondPoint;
+    private Rigidbody _rb;
     public LayerMask colMask;
 
     private void Start()
     {
-        speed = 0.3f;
-        rbody = GetComponent<Rigidbody>();
         lastPosition = transform.position;
+        _rb = GetComponent<Rigidbody>();
+        dashTime = StartDashTime;
         isMoving.Enqueue(false);// пока 5 кадра пусть будет
         isMoving.Enqueue(false);//
         isMoving.Enqueue(false);//
         isMoving.Enqueue(false);//
         isMoving.Enqueue(false);//
-
-
-        //kostil.Enqueue(Vector3.zero);// костыль
-        //kostil.Enqueue(Vector3.zero);// костыль
-        //kostil.Enqueue(Vector3.zero);// костыль
-        //kostil.Enqueue(Vector3.zero);// костыль
     }
 
     void Update()
     {
-        kostil.Enqueue(transform.position);// костыль
-        kostil.Dequeue();// костыль
         if (transform.position != lastPosition)
         {
             isMoving.Enqueue(true);
@@ -63,7 +49,6 @@ public class DashMove : MonoBehaviour
         }
 
         lastPosition = transform.position;
-        startPosition = transform.position;
         Dash();
     }
 
@@ -73,6 +58,7 @@ public class DashMove : MonoBehaviour
         {
             Touch touch = Input.GetTouch(0);
             Ray ray = Camera.main.ScreenPointToRay(touch.position);
+            Debug.DrawRay(transform.position, transform.forward * 100f, Color.yellow);
             RaycastHit hit;
 
             switch (touch.phase)
@@ -83,7 +69,7 @@ public class DashMove : MonoBehaviour
                     {
                         touchPos = hit.point;  //touch position
                     }
-                    touchPos.y = 0; //y = 0 prevent flying 
+                    touchPos.y = 0;  //y = 0 prevent flying 
                     break;
 
                 case TouchPhase.Ended:
@@ -93,99 +79,44 @@ public class DashMove : MonoBehaviour
                         releasePos = hit.point;
                     }
                     releasePos.y = 0;
-                    swipeVector = releasePos - touchPos;//movement vector
-                    maximaseSwipe = Vector3.ClampMagnitude(swipeVector, maxSwipeLenght);
-                    oldPos = transform.position;
-                    if (bounce)
-                        CastRay(transform.position, maximaseSwipe, oldPos);
-                    else NoBounceMetod();
+                    swipeVector = releasePos - touchPos; //movement vector
+                    Debug.Log(swipeVector);
+                    seckondPoint = transform.position + Vector3.ClampMagnitude(swipeVector, maxSwipeLenght);
                     break;
             }
         }
-    }
 
-    private void NoBounceMetod()
-    {
-        oldPos = transform.position;
-        secondPoint = transform.position + maximaseSwipe;
-
-        Debug.DrawRay(transform.position, maximaseSwipe, Color.red);
-        Ray objectRay = new Ray(transform.position, maximaseSwipe);
-        RaycastHit hit2;
-        if (Physics.Raycast(objectRay, out hit2, maximaseSwipe.magnitude, colMask))
-        {
-            secondPoint = hit2.point - maximaseSwipe.normalized / 10;
-            Debug.Log("hit");
-        }
         else
         {
-            secondPoint = oldPos + maximaseSwipe;
-            Debug.Log("no");
-        }
-    }
-
-    void CastRay(Vector3 pos, Vector3 dir, Vector3 oldpose)
-    {
-        for (int i = 0; i < Raycount; i++)
-        {
-            Ray objectRay2 = new Ray(pos, dir);
-            RaycastHit hit1;
-            if (Physics.Raycast(objectRay2, out hit1, ((oldPos + dir) - pos).magnitude))
+            if (dashTime <= 0)
             {
-                Debug.DrawLine(pos, hit1.point, Color.red);
-                pos = hit1.point - dir.normalized / 10;
-                dir = Vector3.Reflect(dir, hit1.normal);
-                oldPos = hit1.point;
-                movePoints.Add(pos);
-                Debug.Log(movePoints.Count);
+                swipeVector = Vector3.zero;
+                //Speed = 0;
+                dashTime = StartDashTime;
+                //_rb.AddForce(Vector3.zero);
+                //_rb.velocity = Vector3.zero;
             }
             else
             {
-                Debug.DrawRay(pos, (oldPos + dir) - pos, Color.blue);
-                Debug.Log(movePoints.Count);
-                movePoints.Add(oldPos + dir);
-                break;
+                //Speed = 1f;
+                dashTime -= Time.deltaTime;
             }
         }
     }
 
-
-    public void FixedUpdate()
+    void FixedUpdate()
     {
-        if (movePoints.Count == 1)
-        {
-            secondPoint = movePoints[0];
-            movePoints.Clear();
-        }
-        if (movePoints.Count != 0)
-        {
-            secondPoint = movePoints[flag];
-            if (transform.position == secondPoint) flag++;
-            if (transform.position == movePoints[movePoints.Count - 1])
-            {
-                flag = 0;
-                movePoints.Clear();
-            }
-        }
-        if (secondPoint != Vector3.zero)
-            transform.position = Vector3.MoveTowards(transform.position, secondPoint, speed);
+        Vector3 postMove = Vector3.Lerp(transform.position, seckondPoint, Speed);
+        //transform.position = postMove;
+        //{
+        _rb.velocity = swipeVector;
+        //_rb.AddForce(swipeVector * Speed, ForceMode.VelocityChange);
     }
+
     public void OnCollisionEnter(Collision col)
     {
         switch (col.collider.tag)
         {
-            //case "wall":
-            //    var kostil2 = kostil.Dequeue();// костыль
-            //    transform.position = kostil2;// костыль
-            //    seckondPoint = kostil2;// костыль
-            //    kostil.Clear();// костыль
-            //    kostil.Enqueue(transform.position);// костыль
-            //    kostil.Enqueue(transform.position);// костыль
-            //    kostil.Enqueue(transform.position);// костыль
-            //    kostil.Enqueue(transform.position);// костыль
-
-            //    break;
-
             case "enemy":
                 foreach(var i in isMoving)
                 {
