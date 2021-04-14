@@ -11,13 +11,11 @@ public class DashMove : MonoBehaviour
     public PlayerBehaviour player;
     private double playerDamage = 1.2;
 
-
     Vector3 lastPosition;
-    public float Speed = 0.00000000001f;
-    public float maxSwipeLenght;
-    private float dashTime;
-    public static float StartDashTime = 3f;
-    private Vector3 touchPos, releasePos, swipeVector, seckondPoint;
+    public float Speed = 1f;
+    public float maxSwipeLenght = 10f;
+    public float dashTime = 1f;
+    private Vector3 touchPos, releasePos, swipeVector, seckondPoint, initialPosition;
     private Rigidbody _rb;
     public LayerMask colMask;
 
@@ -25,7 +23,6 @@ public class DashMove : MonoBehaviour
     {
         lastPosition = transform.position;
         _rb = GetComponent<Rigidbody>();
-        dashTime = StartDashTime;
         isMoving.Enqueue(false);// пока 5 кадра пусть будет
         isMoving.Enqueue(false);//
         isMoving.Enqueue(false);//
@@ -61,15 +58,16 @@ public class DashMove : MonoBehaviour
             Debug.DrawRay(transform.position, transform.forward * 100f, Color.yellow);
             RaycastHit hit;
 
+            //read swipe coordinates
             switch (touch.phase)
             {
                 case TouchPhase.Began:
 
                     if (Physics.Raycast(ray, out hit))
                     {
-                        touchPos = hit.point;  //touch position
+                        touchPos = hit.point;  
                     }
-                    touchPos.y = 0;  //y = 0 prevent flying 
+                    touchPos.y = 0;
                     break;
 
                 case TouchPhase.Ended:
@@ -79,39 +77,58 @@ public class DashMove : MonoBehaviour
                         releasePos = hit.point;
                     }
                     releasePos.y = 0;
-                    swipeVector = releasePos - touchPos; //movement vector
-                    Debug.Log(swipeVector);
-                    seckondPoint = transform.position + Vector3.ClampMagnitude(swipeVector, maxSwipeLenght);
+                    //seckondPoint = transform.position + Vector3.ClampMagnitude(swipeVector, maxSwipeLenght);
                     break;
             }
+            swipeVector = (releasePos - touchPos).normalized; 
         }
-
         else
         {
-            if (dashTime <= 0)
-            {
-                swipeVector = Vector3.zero;
-                //Speed = 0;
-                dashTime = StartDashTime;
-                //_rb.AddForce(Vector3.zero);
-                //_rb.velocity = Vector3.zero;
-            }
-            else
-            {
-                //Speed = 1f;
-                dashTime -= Time.deltaTime;
-            }
+            //move
+            _rb.velocity = swipeVector * Speed;
+            //StopDashByTime(dashTime);
+            StopDashByDistance(maxSwipeLenght);
+        }
+    }
+
+    private void StopDashByTime(float time)
+    {
+        Debug.Log(time);
+        
+        time -= Time.deltaTime;
+        if (time <= 0)
+        {
+            _rb.velocity = Vector3.zero;
+        }
+    }
+
+    private void StopDashByDistance(float distance)
+    {
+        Debug.Log((float) Vector3.Distance(initialPosition, _rb.position));
+        Debug.Log("initial position: " + initialPosition);
+        Debug.Log("current position: " + _rb.position);
+        Debug.Log("velocity: " + _rb.velocity);
+
+        if (_rb.velocity == Vector3.zero)   //if standing still
+        {
+            initialPosition = _rb.position; //remember position
+        }
+        else if (_rb.velocity != Vector3.zero && Vector3.Distance(initialPosition, _rb.position) >= distance)  //if moving && distance > max
+        {
+            _rb.velocity = Vector3.zero;    //stop
         }
     }
 
     void FixedUpdate()
     {
-        Vector3 postMove = Vector3.Lerp(transform.position, seckondPoint, Speed);
+        //Vector3 postMove = Vector3.Lerp(transform.position, seckondPoint, Speed);
         //transform.position = postMove;
         //{
-        _rb.velocity = swipeVector;
-        //_rb.AddForce(swipeVector * Speed, ForceMode.VelocityChange);
+        //_rb.velocity = swipeVector;
+        
     }
+
+    
 
     public void OnCollisionEnter(Collision col)
     {
