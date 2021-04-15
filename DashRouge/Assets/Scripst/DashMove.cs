@@ -10,20 +10,22 @@ public class DashMove : MonoBehaviour
     public enemyScript enemy;
     public PlayerBehaviour player;
     private double playerDamage = 1.2;
-    
-    public float Speed = 1f;
-    public float MaxSwipeLenght = 10f;
+
+    float traveledDistance = 0f;
+    public static float Speed = 100f;
+    public static float MaxSwipeLenght = 1f;
     public float DashTime = 1f;
     private Vector3 touchPos, releasePos, swipeVector, seckondPoint, initialPosition, lastPosition;
     private Rigidbody _rb;
     public LayerMask colMask;
-    
+
 
     private void Start()
     {
-        
+
         lastPosition = transform.position;
         _rb = GetComponent<Rigidbody>();
+        initialPosition = transform.position;
         isMoving.Enqueue(false);// пока 5 кадра пусть будет
         isMoving.Enqueue(false);//
         isMoving.Enqueue(false);//
@@ -66,7 +68,7 @@ public class DashMove : MonoBehaviour
 
                     if (Physics.Raycast(ray, out hit))
                     {
-                        touchPos = hit.point;  
+                        touchPos = hit.point;
                     }
                     touchPos.y = 0;
                     break;
@@ -78,10 +80,11 @@ public class DashMove : MonoBehaviour
                         releasePos = hit.point;
                     }
                     releasePos.y = 0;
+                    swipeVector = (releasePos - touchPos).normalized;
                     //seckondPoint = transform.position + Vector3.ClampMagnitude(swipeVector, maxSwipeLenght);
                     break;
             }
-            swipeVector = (releasePos - touchPos).normalized; 
+            //swipeVector = (releasePos - touchPos).normalized; 
         }
         else
         {
@@ -95,7 +98,7 @@ public class DashMove : MonoBehaviour
     private void StopDashByTime(float time)
     {
         Debug.Log(time);
-        
+
         time -= Time.deltaTime;
         if (time <= 0)
         {
@@ -105,21 +108,24 @@ public class DashMove : MonoBehaviour
 
     private void StopDashByDistance(float distance) //CANT MOVE AFTER FIRST STOP !?
     {
-        float traveledDistance = 0f;
-        Debug.Log("distance: " + traveledDistance);
-        Debug.Log("current position: " + _rb.position);
-
-        if (traveledDistance > distance)  //if moving && distance > max
+        Debug.Log("прошел: " + traveledDistance);
+        // Debug.Log("current position: " + transform.position);
+        Debug.Log("максимум: " + distance);
+        if (traveledDistance >= distance)  //if moving && distance > max
         {
             _rb.velocity = Vector3.zero;//stop
+            traveledDistance = 0f;
             Debug.Log("velocity: " + _rb.velocity);
             Debug.Log("traveled distance: " + traveledDistance);
         }
-        //while (_rb.velocity != Vector3.zero)
-        //    traveledDistance = Vector3.Distance(initialPosition, _rb.position);
+        if (_rb.velocity != Vector3.zero)
+        {
+            traveledDistance = Math.Abs(Vector3.Distance(initialPosition, transform.position));
+            //Debug.Log("traveled distance зашло в цикл дистанция= "+ traveledDistance);
+        }
         if (_rb.velocity == Vector3.zero)
         {
-            initialPosition = _rb.position; //remember position
+            initialPosition = transform.position; //remember position
             Debug.Log("initial position: " + initialPosition);
         }
     }
@@ -130,17 +136,17 @@ public class DashMove : MonoBehaviour
         //transform.position = postMove;
         //{
         //_rb.velocity = swipeVector;
-        
+
     }
 
-    
+
 
     public void OnCollisionEnter(Collision col)
     {
         switch (col.collider.tag)
         {
             case "enemy":
-                foreach(var i in isMoving)
+                foreach (var i in isMoving)
                 {
                     if (i == true)
                     {
@@ -168,7 +174,7 @@ public class DashMove : MonoBehaviour
                     }
                 }
                 break;
-        }     
+        }
     }
-    
+
 }
