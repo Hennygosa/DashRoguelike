@@ -8,6 +8,7 @@ TagManager:
   - enemy
   - player
   - dead
+  - sparks
   layers:
   - Default
   - TransparentFX

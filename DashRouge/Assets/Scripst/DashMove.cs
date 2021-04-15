@@ -10,17 +10,18 @@ public class DashMove : MonoBehaviour
     public enemyScript enemy;
     public PlayerBehaviour player;
     private double playerDamage = 1.2;
-
-    Vector3 lastPosition;
+    
     public float Speed = 1f;
-    public float maxSwipeLenght = 10f;
-    public float dashTime = 1f;
-    private Vector3 touchPos, releasePos, swipeVector, seckondPoint, initialPosition;
+    public float MaxSwipeLenght = 10f;
+    public float DashTime = 1f;
+    private Vector3 touchPos, releasePos, swipeVector, seckondPoint, initialPosition, lastPosition;
     private Rigidbody _rb;
     public LayerMask colMask;
+    
 
     private void Start()
     {
+        
         lastPosition = transform.position;
         _rb = GetComponent<Rigidbody>();
         isMoving.Enqueue(false);// пока 5 кадра пусть будет
@@ -87,7 +88,7 @@ public class DashMove : MonoBehaviour
             //move
             _rb.velocity = swipeVector * Speed;
             //StopDashByTime(dashTime);
-            StopDashByDistance(maxSwipeLenght);
+            StopDashByDistance(MaxSwipeLenght);
         }
     }
 
@@ -102,20 +103,24 @@ public class DashMove : MonoBehaviour
         }
     }
 
-    private void StopDashByDistance(float distance)
+    private void StopDashByDistance(float distance) //CANT MOVE AFTER FIRST STOP !?
     {
-        Debug.Log((float) Vector3.Distance(initialPosition, _rb.position));
-        Debug.Log("initial position: " + initialPosition);
+        float traveledDistance = 0f;
+        Debug.Log("distance: " + traveledDistance);
         Debug.Log("current position: " + _rb.position);
-        Debug.Log("velocity: " + _rb.velocity);
 
-        if (_rb.velocity == Vector3.zero)   //if standing still
+        if (traveledDistance > distance)  //if moving && distance > max
+        {
+            _rb.velocity = Vector3.zero;//stop
+            Debug.Log("velocity: " + _rb.velocity);
+            Debug.Log("traveled distance: " + traveledDistance);
+        }
+        //while (_rb.velocity != Vector3.zero)
+        //    traveledDistance = Vector3.Distance(initialPosition, _rb.position);
+        if (_rb.velocity == Vector3.zero)
         {
             initialPosition = _rb.position; //remember position
-        }
-        else if (_rb.velocity != Vector3.zero && Vector3.Distance(initialPosition, _rb.position) >= distance)  //if moving && distance > max
-        {
-            _rb.velocity = Vector3.zero;    //stop
+            Debug.Log("initial position: " + initialPosition);
         }
     }
 
@@ -144,6 +149,26 @@ public class DashMove : MonoBehaviour
                     }
                 }
                 break;
+
+            case "wall":
+                {
+                    foreach (ContactPoint contact in col.contacts)
+                    {
+                        GameObject sparks = GameObject.Find("Sparks");
+                        ParticleSystem emmiter = sparks.GetComponent<ParticleSystem>();
+                        sparks.transform.position = contact.point;
+                        emmiter.enableEmission = true;
+                        StartCoroutine(stopSparkles());
+
+                        IEnumerator stopSparkles()
+                        {
+                            yield return new WaitForSeconds(1f);
+                            emmiter.enableEmission = false;
+                        }
+                    }
+                }
+                break;
         }     
     }
+    
 }

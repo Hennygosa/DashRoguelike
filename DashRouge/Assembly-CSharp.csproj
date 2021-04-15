@@ -63,6 +63,7 @@
     <Compile Include="Assets\Scripst\PlayerBehaviour.cs" />
     <Compile Include="Assets\Scripst\MeshGenerator.cs" />
     <Compile Include="Assets\Scripst\SceneChange.cs" />
+    <Compile Include="Assets\Scripst\CameraShake.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
