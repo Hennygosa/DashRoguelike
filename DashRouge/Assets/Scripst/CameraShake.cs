@@ -43,7 +43,7 @@ public class CameraShake : MonoBehaviour
     {
         OriginalPos = camera.transform.position;
 
-        ShakeIntensity = 10f;
+        ShakeIntensity = 3f;
         ShakeDecay = 0.5f;
         Shaking = true;
     }

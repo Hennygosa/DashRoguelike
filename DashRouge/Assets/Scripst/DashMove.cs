@@ -89,9 +89,10 @@ public class DashMove : MonoBehaviour
         else
         {
             //move
-            _rb.velocity = swipeVector * Speed;
+            _rb.AddForce(swipeVector, ForceMode.VelocityChange);
+            //_rb.velocity = swipeVector * Speed;
             //StopDashByTime(dashTime);
-            StopDashByDistance(MaxSwipeLenght);
+            //StopDashByDistance(MaxSwipeLenght);
         }
     }
 
@@ -111,10 +112,10 @@ public class DashMove : MonoBehaviour
         Debug.Log("прошел: " + traveledDistance);
         // Debug.Log("current position: " + transform.position);
         Debug.Log("максимум: " + distance);
-        if (traveledDistance >= distance)  //if moving && distance > max
+        if (traveledDistance >= distance && _rb.velocity != Vector3.zero)  //if moving && distance > max
         {
             _rb.velocity = Vector3.zero;//stop
-            traveledDistance = 0f;
+            //traveledDistance = 0f;
             Debug.Log("velocity: " + _rb.velocity);
             Debug.Log("traveled distance: " + traveledDistance);
         }

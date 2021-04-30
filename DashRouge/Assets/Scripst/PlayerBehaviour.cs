@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerBehaviour : MonoBehaviour
 {
     public double health = 10;
-    public static double playerDamage = 1;
+    public static double playerDamage = 10;
     public GameObject spawnPoint;
     // Start is called before the first frame update
     void Start()
@@ -29,5 +29,15 @@ public class PlayerBehaviour : MonoBehaviour
     {
         health -= damage;
         Debug.Log("получил урон игрок, хп =" + health);
+    }
+    private void OnCollisionEnter(Collision other)
+    {
+        GameObject enemy = other.gameObject;
+        if (enemy.tag == "enemy")
+        {
+            enemy.GetComponent<enemyScript>().takeDamage(playerDamage);
+            Debug.Log(enemy.GetComponent<enemyScript>().health);
+            //this.GetComponent<Rigidbody>().velocity = Vector3.zero;
+        }
     }
 }
