@@ -28,7 +28,7 @@ public class PlayerBehaviour : MonoBehaviour
     public void takeDamage(double damage)
     {
         health -= damage;
-        Debug.Log("получил урон игрок, хп =" + health);
+        //Debug.Log("получил урон игрок, хп =" + health);
     }
     private void OnCollisionEnter(Collision other)
     {
@@ -36,7 +36,7 @@ public class PlayerBehaviour : MonoBehaviour
         if (enemy.tag == "enemy")
         {
             enemy.GetComponent<enemyScript>().takeDamage(playerDamage);
-            Debug.Log(enemy.GetComponent<enemyScript>().health);
+            //Debug.Log(enemy.GetComponent<enemyScript>().health);
             //this.GetComponent<Rigidbody>().velocity = Vector3.zero;
         }
     }

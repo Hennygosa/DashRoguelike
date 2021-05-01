@@ -51,7 +51,7 @@ public class enemyScript : MonoBehaviour
 
     void Attack()
     {
-        Debug.Log("Enemy attacks for " + attackDamage);
+        //Debug.Log("Enemy attacks for " + attackDamage);
         player.takeDamage(attackDamage);
     }
 

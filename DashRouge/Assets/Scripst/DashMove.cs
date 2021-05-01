@@ -58,7 +58,6 @@ public class DashMove : MonoBehaviour
         {
             Touch touch = Input.GetTouch(0);
             Ray ray = Camera.main.ScreenPointToRay(touch.position);
-            Debug.DrawRay(transform.position, transform.forward * 100f, Color.yellow);
             RaycastHit hit;
 
             //read swipe coordinates
@@ -81,18 +80,12 @@ public class DashMove : MonoBehaviour
                     }
                     releasePos.y = 0;
                     swipeVector = (releasePos - touchPos).normalized;
-                    //seckondPoint = transform.position + Vector3.ClampMagnitude(swipeVector, maxSwipeLenght);
+                    if (_rb.velocity.magnitude == 0)
+                    {
+                        _rb.AddForce(swipeVector * Speed, ForceMode.Impulse);
+                    }
                     break;
             }
-            //swipeVector = (releasePos - touchPos).normalized; 
-        }
-        else
-        {
-            //move
-            _rb.AddForce(swipeVector, ForceMode.VelocityChange);
-            //_rb.velocity = swipeVector * Speed;
-            //StopDashByTime(dashTime);
-            //StopDashByDistance(MaxSwipeLenght);
         }
     }
 
