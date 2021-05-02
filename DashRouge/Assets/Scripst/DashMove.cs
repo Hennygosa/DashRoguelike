@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -10,24 +10,24 @@ public class DashMove : MonoBehaviour
     public enemyScript enemy;
     public PlayerBehaviour player;
     private double playerDamage = 1.2;
-    private ParticleSystem HitSparks;
 
-    Vector3 lastPosition;
+    float traveledDistance = 0f;
     public static float Speed = 100f;
-    public float maxSwipeLenght;
-    private float dashTime;
-    public static float StartDashTime = 0.5f;
-    private Vector3 touchPos, releasePos, swipeVector, seckondPoint;
+    public static float MaxSwipeLenght = 1f;
+    public float DashTime = 1f;
+    private Vector3 touchPos, releasePos, swipeVector, seckondPoint, initialPosition, lastPosition;
     private Rigidbody _rb;
     public LayerMask colMask;
+
+    private ParticleSystem HitSparks;
 
     private void Start()
     {
         HitSparks = GetComponentInChildren<ParticleSystem>();
         lastPosition = transform.position;
         _rb = GetComponent<Rigidbody>();
-        dashTime = StartDashTime;
-        isMoving.Enqueue(false);// 
+        initialPosition = transform.position;
+        isMoving.Enqueue(false);// ïîêà 5 êàäðà ïóñòü áóäåò
         isMoving.Enqueue(false);//
         isMoving.Enqueue(false);//
         isMoving.Enqueue(false);//
@@ -40,11 +40,13 @@ public class DashMove : MonoBehaviour
         {
             isMoving.Enqueue(true);
             isMoving.Dequeue();
+            //Debug.Log("äâèãàåòñÿ");
         }
         else
         {
             isMoving.Enqueue(false);
             isMoving.Dequeue();
+            //Debug.Log("íå äâèãàåòñÿ");
         }
 
         lastPosition = transform.position;
@@ -57,18 +59,18 @@ public class DashMove : MonoBehaviour
         {
             Touch touch = Input.GetTouch(0);
             Ray ray = Camera.main.ScreenPointToRay(touch.position);
-            Debug.DrawRay(transform.position, transform.forward * 100f, Color.yellow);
             RaycastHit hit;
 
+            //read swipe coordinates
             switch (touch.phase)
             {
                 case TouchPhase.Began:
 
                     if (Physics.Raycast(ray, out hit))
                     {
-                        touchPos = hit.point;  //touch position
+                        touchPos = hit.point;
                     }
-                    touchPos.y = 0;  //y = 0 prevent flying 
+                    touchPos.y = 0;
                     break;
 
                 case TouchPhase.Ended:
@@ -78,28 +80,48 @@ public class DashMove : MonoBehaviour
                         releasePos = hit.point;
                     }
                     releasePos.y = 0;
-                    swipeVector = (releasePos - touchPos).normalized; //movement vector
-                    Debug.Log(swipeVector);
-                    //seckondPoint = transform.position + Vector3.ClampMagnitude(swipeVector, maxSwipeLenght);
+                    swipeVector = (releasePos - touchPos).normalized;
+                    if (_rb.velocity.magnitude == 0)
+                    {
+                        _rb.AddForce(swipeVector * Speed, ForceMode.Impulse);
+                    }
                     break;
             }
         }
+    }
 
-        else
+    private void StopDashByTime(float time)
+    {
+        Debug.Log(time);
+
+        time -= Time.deltaTime;
+        if (time <= 0)
         {
-            if (dashTime <= 0)
-            {
-                swipeVector = Vector3.zero;
-                //Speed = 0;
-                dashTime = StartDashTime;
-                //_rb.AddForce(Vector3.zero);
-                //_rb.velocity = Vector3.zero;
-            }
-            else
-            {
-                //Speed = 1f;
-                dashTime -= Time.deltaTime;
-            }
+            _rb.velocity = Vector3.zero;
+        }
+    }
+
+    private void StopDashByDistance(float distance) //CANT MOVE AFTER FIRST STOP !?
+    {
+        Debug.Log("ïðîøåë: " + traveledDistance);
+        // Debug.Log("current position: " + transform.position);
+        Debug.Log("ìàêñèìóì: " + distance);
+        if (traveledDistance >= distance && _rb.velocity != Vector3.zero)  //if moving && distance > max
+        {
+            _rb.velocity = Vector3.zero;//stop
+            //traveledDistance = 0f;
+            Debug.Log("velocity: " + _rb.velocity);
+            Debug.Log("traveled distance: " + traveledDistance);
+        }
+        if (_rb.velocity != Vector3.zero)
+        {
+            traveledDistance = Math.Abs(Vector3.Distance(initialPosition, transform.position));
+            //Debug.Log("traveled distance çàøëî â öèêë äèñòàíöèÿ= "+ traveledDistance);
+        }
+        if (_rb.velocity == Vector3.zero)
+        {
+            initialPosition = transform.position; //remember position
+            Debug.Log("initial position: " + initialPosition);
         }
     }
 
@@ -108,29 +130,28 @@ public class DashMove : MonoBehaviour
         //Vector3 postMove = Vector3.Lerp(transform.position, seckondPoint, Speed);
         //transform.position = postMove;
         //{
-        _rb.velocity = swipeVector * Speed;
-        //_rb.AddForce(swipeVector * Speed, ForceMode.VelocityChange);
+        //_rb.velocity = swipeVector;
+
     }
+
+
 
     public void OnCollisionEnter(Collision col)
     {
         switch (col.collider.tag)
         {
             case "enemy":
+                foreach (var i in isMoving)
                 {
-                    HitSparks.Play();
-                    foreach (var i in isMoving)
+                    if (i == true)
                     {
-                        if (i == true)
-                        {
-                            Debug.Log("��������� ����� � ������, �� �����: " + col.collider.gameObject.GetComponent<enemyScript>().health);
-                            col.collider.gameObject.GetComponent<enemyScript>().takeDamage(playerDamage);
-                        }
+                        Debug.Log("ÄÂÈÃÀÅÒÑß ÐßÄÎÌ Ñ ÂÐÀÃÎÌ, õï âðàãà: " + col.collider.gameObject.GetComponent<enemyScript>().health);
+                        col.collider.gameObject.GetComponent<enemyScript>().takeDamage(playerDamage);
                     }
                 }
                 break;
 
-            case "Respawn":
+            case "wall":
                 {
                     HitSparks.Play();
                 }
