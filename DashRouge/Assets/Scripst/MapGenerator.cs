@@ -21,13 +21,6 @@ public class MapGenerator : MonoBehaviour
         GenerateMap();
     }
 
-    void Update()
-    {
-        //if (Input.touchCount > 0)
-        //{
-        //    GenerateMap();
-        //}
-    }
 
     void GenerateMap()
     {

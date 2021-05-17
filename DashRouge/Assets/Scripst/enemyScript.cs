@@ -19,6 +19,9 @@ public class enemyScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (GameObject.FindGameObjectsWithTag("player").Length != 0)
+            player = GameObject.FindGameObjectWithTag("player").GetComponent<PlayerBehaviour>();
+
         agent = GetComponent<NavMeshAgent>();
         InvokeRepeating("Move", 0, .5f);
     }
@@ -26,12 +29,17 @@ public class enemyScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        double distance;
         if (health <= 0)
         {
             transform.tag = "dead";
             Destroy(gameObject);
         }
-        double distance = Vector3.Distance(transform.position, player.transform.position);
+        
+        if (GameObject.FindGameObjectsWithTag("player").Length != 0)
+            distance = Vector3.Distance(transform.position, player.transform.position);
+        else
+            distance = attackRange + 1;
         if (attackCountdown <= 0 && distance <= attackRange)
         {
             Attack();
@@ -58,13 +66,18 @@ public class enemyScript : MonoBehaviour
     
     void Move()
     {
-        double distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
-
-        if (distanceToPlayer <= aggroRange)
-        {
-            agent.isStopped = false;
-            agent.SetDestination(player.transform.position);
+        double distanceToPlayer;
+        if (GameObject.FindGameObjectsWithTag("player").Length != 0)
+        { 
+            distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
+            if (distanceToPlayer <= aggroRange)
+            {
+                agent.isStopped = false;
+                agent.SetDestination(player.transform.position);
+            }
         }
+        else
+            Stop();
     }
 
     void Stop()

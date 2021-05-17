@@ -8,11 +8,11 @@ public class CameraShake : MonoBehaviour
     private float ShakeDecay;
     private float ShakeIntensity;
     private Vector3 OriginalPos;
-    public Camera camera;
+    public Camera cam;
 
     void Start()
     {
-        camera = FindObjectOfType<Camera>();
+        cam = FindObjectOfType<Camera>();
         Shaking = false;
     }
 
@@ -29,7 +29,7 @@ public class CameraShake : MonoBehaviour
     {
         if (ShakeIntensity > 0)
         {
-            camera.transform.position = OriginalPos + Random.insideUnitSphere * ShakeIntensity;
+            cam.transform.position = OriginalPos + Random.insideUnitSphere * ShakeIntensity;
             
             ShakeIntensity -= ShakeDecay;
         }
@@ -41,7 +41,7 @@ public class CameraShake : MonoBehaviour
 
     public void DoShake()
     {
-        OriginalPos = camera.transform.position;
+        OriginalPos = cam.transform.position;
 
         ShakeIntensity = 3f;
         ShakeDecay = 0.5f;
