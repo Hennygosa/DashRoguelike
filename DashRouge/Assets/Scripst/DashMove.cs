@@ -133,11 +133,11 @@ public class DashMove : MonoBehaviour
                         }
                         else
                         {
-                            gameObject.GetComponent<PlayerBehaviour>().health += healValue;
+                            gameObject.GetComponent<PlayerBehaviour>().health += healValue;                          
                         }
-                    }
+                    }        
+                    break;
                 }
-                break;
         }
     }
 
@@ -156,6 +156,8 @@ public class DashMove : MonoBehaviour
                 else
                 {
                     gameObject.GetComponent<PlayerBehaviour>().health += healValue;
+                    gameObject.GetComponent<PlayerBehaviour>().hpBar.value = (float)gameObject.GetComponent<PlayerBehaviour>().health;
+                    gameObject.GetComponent<PlayerBehaviour>().textHealth.text = Mathf.Round((float)gameObject.GetComponent<PlayerBehaviour>().health).ToString() + '/' + maxHealth;//Приятно читать, да?
                 }
             }
         }
