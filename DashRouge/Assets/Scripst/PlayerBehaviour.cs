@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerBehaviour : MonoBehaviour
 {
-    public double health = 10;
+    public double health = 50;
     public static double playerDamage = 10;
     public GameObject spawnPoint;
     // Start is called before the first frame update
@@ -36,6 +36,7 @@ public class PlayerBehaviour : MonoBehaviour
         if (enemy.tag == "enemy")
         {
             enemy.GetComponent<enemyScript>().takeDamage(playerDamage);
+
             //Debug.Log(enemy.GetComponent<enemyScript>().health);
             //this.GetComponent<Rigidbody>().velocity = Vector3.zero;
         }

@@ -9,6 +9,7 @@ TagManager:
   - player
   - dead
   - sparks
+  - heal
   layers:
   - Default
   - TransparentFX

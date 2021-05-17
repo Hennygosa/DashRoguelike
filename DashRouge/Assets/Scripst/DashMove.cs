@@ -8,6 +8,8 @@ public class DashMove : MonoBehaviour
 {
     private Queue<bool> isMoving = new Queue<bool>();
     private double playerDamage = 1.2;
+    public double maxHealth = 50;
+    public double healValue = 3;
 
     public static float Speed = 100f;
     public static float MaxSwipeLenght = 1f;
@@ -117,7 +119,45 @@ public class DashMove : MonoBehaviour
                     HitSparks.Play();
                 }
                 break;
+
+            case "heal":
+                {
+                    Debug.Log("asdfasdfsadf");
+                    var temp = gameObject.GetComponent<PlayerBehaviour>().health;
+                    if (temp < maxHealth)
+                    {
+                        Destroy(col.collider.gameObject);
+                        if (maxHealth - temp <= healValue)
+                        {
+                            gameObject.GetComponent<PlayerBehaviour>().health = maxHealth;
+                        }
+                        else
+                        {
+                            gameObject.GetComponent<PlayerBehaviour>().health += healValue;
+                        }
+                    }
+                }
+                break;
         }
     }
 
+    public void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.tag == "heal")
+        {
+            var temp = gameObject.GetComponent<PlayerBehaviour>().health;
+            if (temp < maxHealth)
+            {
+                Destroy(other.gameObject);
+                if (maxHealth - temp <= healValue)
+                {
+                    gameObject.GetComponent<PlayerBehaviour>().health = maxHealth;
+                }
+                else
+                {
+                    gameObject.GetComponent<PlayerBehaviour>().health += healValue;
+                }
+            }
+        }
+    }
 }

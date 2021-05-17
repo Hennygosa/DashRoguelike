@@ -2,13 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Timers;
 using UnityEngine;
-using System;
 using UnityEngine.AI;
 
 public class enemyScript : MonoBehaviour
 {
     public PlayerBehaviour player;
     NavMeshAgent agent;
+    public List<DropItem> dropList;
+    public GameObject heal;
 
     public double health = 2;
     private double attackDamage = 3.1;
@@ -19,6 +20,8 @@ public class enemyScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        dropList.Add(new DropItem(heal, 0));
+
         if (GameObject.FindGameObjectsWithTag("player").Length != 0)
             player = GameObject.FindGameObjectWithTag("player").GetComponent<PlayerBehaviour>();
 
@@ -30,11 +33,11 @@ public class enemyScript : MonoBehaviour
     void Update()
     {
         double distance;
-        if (health <= 0)
-        {
-            transform.tag = "dead";
-            Destroy(gameObject);
-        }
+        //if (health <= 0)
+        //{
+        //    transform.tag = "dead";
+        //    Destroy(gameObject);
+        //}
         
         if (GameObject.FindGameObjectsWithTag("player").Length != 0)
             distance = Vector3.Distance(transform.position, player.transform.position);
@@ -55,6 +58,12 @@ public class enemyScript : MonoBehaviour
     public void takeDamage(double damage)
     {
         health -= damage;
+        if (health <= 0)
+        {
+            transform.tag = "dead";
+            Destroy(gameObject);
+            CheckDrop();
+        }
     }
 
     void Attack()
@@ -83,5 +92,22 @@ public class enemyScript : MonoBehaviour
     void Stop()
     {
         agent.isStopped = true;
+    }
+
+    public void CheckDrop()
+    {
+        if (dropList.Count > 0)
+        {
+            int rnd = (int)Random.Range(0, 100);
+
+            foreach (var item in dropList)
+            {
+                if (item.chance < rnd)
+                {
+                    item.CreateDropItem(gameObject.transform.position);
+                    return;
+                }
+            }
+        }
     }
 }

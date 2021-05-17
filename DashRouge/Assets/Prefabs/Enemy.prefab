@@ -110,6 +110,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
+  dropList: []
+  heal: {fileID: 7769867335213461279, guid: 915c7b7f6849843428e754480e0f1fa7, type: 3}
   health: 10
 --- !u!195 &1175557337747884501
 NavMeshAgent:
