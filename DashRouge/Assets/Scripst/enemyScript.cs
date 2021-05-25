@@ -13,7 +13,7 @@ public class enemyScript : MonoBehaviour
 
     public double health = 2;
     private double attackDamage = 3.1;
-    private double aggroRange = 20;
+    private double aggroRange = 15;
     private double attackRange = 3;
     private double attackRate = 1;
     private double attackCountdown = 0;
