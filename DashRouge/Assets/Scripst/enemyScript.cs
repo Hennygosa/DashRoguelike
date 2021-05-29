@@ -17,6 +17,8 @@ public class enemyScript : MonoBehaviour
     private double attackRange = 3;
     private double attackRate = 1;
     private double attackCountdown = 0;
+    private Animator animator;
+    private bool костыл€мбаЌа”дар = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -27,6 +29,7 @@ public class enemyScript : MonoBehaviour
 
         agent = GetComponent<NavMeshAgent>();
         InvokeRepeating("Move", 0, .5f);
+        animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -52,7 +55,9 @@ public class enemyScript : MonoBehaviour
         if (distance < attackRange)
         {
             Stop();
+            костыл€мбаЌа”дар = true;
         }
+        else костыл€мбаЌа”дар = false;
     }
 
     public void takeDamage(double damage)
@@ -70,6 +75,7 @@ public class enemyScript : MonoBehaviour
     {
         //Debug.Log("Enemy attacks for " + attackDamage);
         player.takeDamage(attackDamage);
+        animator.Play("Crashing");
     }
 
     
@@ -77,16 +83,21 @@ public class enemyScript : MonoBehaviour
     {
         double distanceToPlayer;
         if (GameObject.FindGameObjectsWithTag("player").Length != 0)
-        { 
+        {
             distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
             if (distanceToPlayer <= aggroRange)
             {
                 agent.isStopped = false;
                 agent.SetDestination(player.transform.position);
+                if (костыл€мбаЌа”дар == false)
+                    animator.Play("Walk");
             }
         }
         else
+        {
             Stop();
+            animator.Play("Idle");
+        }
     }
 
     void Stop()

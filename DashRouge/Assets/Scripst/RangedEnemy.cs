@@ -17,7 +17,8 @@ public class RangedEnemy : MonoBehaviour
     private double attackRange = 10;
     private double attackRate = 0.5;
     private double attackCountdown = 0;
-
+    private Animator animator;
+    private bool костыл€мбаЌа”дар = false;
     void Start()
     {
         dropList.Add(new DropItem(heal, 0));
@@ -27,6 +28,7 @@ public class RangedEnemy : MonoBehaviour
 
         agent = GetComponent<NavMeshAgent>();
         InvokeRepeating("Move", 0, .5f);
+        animator = GetComponent<Animator>();
     }
 
     void Update()
@@ -51,7 +53,9 @@ public class RangedEnemy : MonoBehaviour
         if (distance < attackRange)
         {
             Stop();
+            костыл€мбаЌа”дар = true;
         }
+        else костыл€мбаЌа”дар = false;
     }
 
     public void takeDamage(double damage)
@@ -67,6 +71,7 @@ public class RangedEnemy : MonoBehaviour
 
     void Attack()
     {
+        animator.Play("Crashing");
         Instantiate(projectile, transform.position, Quaternion.identity);
     }
 
@@ -81,10 +86,15 @@ public class RangedEnemy : MonoBehaviour
             {
                 agent.isStopped = false;
                 agent.SetDestination(player.transform.position);
+                if (костыл€мбаЌа”дар == false)
+                    animator.Play("Walk");
             }
         }
         else
+        {
             Stop();
+            animator.Play("Idle");
+        }
     }
 
     void Stop()
