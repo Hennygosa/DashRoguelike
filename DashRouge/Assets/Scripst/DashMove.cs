@@ -6,12 +6,9 @@ using System.Timers;
 
 public class DashMove : MonoBehaviour
 {
-    private Queue<bool> isMoving = new Queue<bool>();
+    // private Queue<bool> isMoving = new Queue<bool>(); vosmozhno ubrat' nado, no poka pust' budet
+    public PlayerBehaviour player;
     private double playerDamage = 1.2;
-    public double maxHealth = 50;
-    public double healValue = 3;
-
-    public static float Speed = 100f;
     public static float MaxSwipeLenght = 1f;
     private Vector3 touchPos, releasePos, swipeVector, lastPosition;
     private Rigidbody _rb;
@@ -24,27 +21,38 @@ public class DashMove : MonoBehaviour
         HitSparks = GetComponentInChildren<ParticleSystem>();
         lastPosition = transform.position;
         _rb = GetComponent<Rigidbody>();
-        isMoving.Enqueue(false);// ïîêà 5 êàäðà ïóñòü áóäåò
-        isMoving.Enqueue(false);//
-        isMoving.Enqueue(false);//
-        isMoving.Enqueue(false);//
-        isMoving.Enqueue(false);//
+        //isMoving.Enqueue(false);// vosmozhno ubrat' nado, no poka pust' budet
+        //isMoving.Enqueue(false);//
+        //isMoving.Enqueue(false);//
+        //isMoving.Enqueue(false);//
+        //isMoving.Enqueue(false);//
     }
 
     void Update()
     {
-        if (transform.position != lastPosition)
+        if (player.speedBoostFlag)
         {
-            isMoving.Enqueue(true);
-            isMoving.Dequeue();
+            player.timeLeft -= Time.deltaTime;
+            if (player.timeLeft < 0)
+            {
+                player.Speed = 100f;
+                player.speedBoostFlag = false;
+                player.timeLeft = 0;
+            }
+        }
+
+        //if (transform.position != lastPosition)
+        //{
+            //isMoving.Enqueue(true);
+            //isMoving.Dequeue();
             //Debug.Log("äâèãàåòñÿ");
-        }
-        else
-        {
-            isMoving.Enqueue(false);
-            isMoving.Dequeue();
+        //}
+        //else
+        //{
+            //isMoving.Enqueue(false);
+            //isMoving.Dequeue();
             //Debug.Log("íå äâèãàåòñÿ");
-        }
+        //}
 
         lastPosition = transform.position;
         Dash();
@@ -80,7 +88,7 @@ public class DashMove : MonoBehaviour
                     swipeVector = (releasePos - touchPos).normalized;
                     if (_rb.velocity.magnitude < 5f)
                     {
-                        _rb.AddForce(swipeVector * Speed, ForceMode.Impulse);
+                        _rb.AddForce(swipeVector * player.Speed, ForceMode.Impulse);
                     }
                     break;
             }
@@ -103,41 +111,22 @@ public class DashMove : MonoBehaviour
     {
         switch (col.collider.tag)
         {
-            case "enemy":
-                foreach (var i in isMoving)
-                {
-                    if (i == true)
-                    {
-                        Debug.Log("ÄÂÈÃÀÅÒÑß ÐßÄÎÌ Ñ ÂÐÀÃÎÌ, õï âðàãà: " + col.collider.gameObject.GetComponent<enemyScript>().health);
-                        col.collider.gameObject.GetComponent<enemyScript>().takeDamage(playerDamage);
-                    }
-                }
-                break;
+            //case "enemy":
+            //    foreach (var i in isMoving)
+            //    {
+            //        if (i == true)
+            //        {
+            //            Debug.Log("ÄÂÈÃÀÅÒÑß ÐßÄÎÌ Ñ ÂÐÀÃÎÌ, õï âðàãà: " + col.collider.gameObject.GetComponent<enemyScript>().health);
+            //            col.collider.gameObject.GetComponent<enemyScript>().takeDamage(playerDamage);
+            //        }
+            //    }
+            //    break; vosmozhno ubrat' nado, no poka pust' budet
 
             case "wall":
                 {
                     HitSparks.Play();
                 }
-                break;
-
-            case "heal":
-                {
-                    Debug.Log("asdfasdfsadf");
-                    var temp = gameObject.GetComponent<PlayerBehaviour>().health;
-                    if (temp < maxHealth)
-                    {
-                        Destroy(col.collider.gameObject);
-                        if (maxHealth - temp <= healValue)
-                        {
-                            gameObject.GetComponent<PlayerBehaviour>().health = maxHealth;
-                        }
-                        else
-                        {
-                            gameObject.GetComponent<PlayerBehaviour>().health += healValue;                          
-                        }
-                    }        
-                    break;
-                }
+                break;    
         }
     }
 
@@ -145,20 +134,19 @@ public class DashMove : MonoBehaviour
     {
         if(other.gameObject.tag == "heal")
         {
-            var temp = gameObject.GetComponent<PlayerBehaviour>().health;
-            if (temp < maxHealth)
+            if (player.health < player.maxHealth)
             {
                 Destroy(other.gameObject);
-                if (maxHealth - temp <= healValue)
+                if (player.maxHealth - player.health <= player.healValue)
                 {
-                    gameObject.GetComponent<PlayerBehaviour>().health = maxHealth;
+                    player.health = player.maxHealth;
                 }
                 else
                 {
-                    gameObject.GetComponent<PlayerBehaviour>().health += healValue;
-                    gameObject.GetComponent<PlayerBehaviour>().hpBar.value = (float)gameObject.GetComponent<PlayerBehaviour>().health;
-                    gameObject.GetComponent<PlayerBehaviour>().textHealth.text = Mathf.Round((float)gameObject.GetComponent<PlayerBehaviour>().health).ToString() + '/' + maxHealth;//Приятно читать, да?
+                    player.health += player.healValue;
                 }
+                player.hpBar.value = (float)player.health;
+                player.textHealth.text = Mathf.Round((float)player.health).ToString() + '/' + player.maxHealth;
             }
         }
     }
