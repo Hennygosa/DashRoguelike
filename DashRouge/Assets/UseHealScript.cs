@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class UseHealScript : MonoBehaviour
@@ -9,7 +10,7 @@ public class UseHealScript : MonoBehaviour
     public Text TextField;
     public void useHeal()
     {
-        if(player.health < player.maxHealth)
+        if (player.health < player.maxHealth)
         {
             if (player.bonuses[1] > 0)
             {

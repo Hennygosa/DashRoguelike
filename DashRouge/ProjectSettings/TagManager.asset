@@ -10,6 +10,7 @@ TagManager:
   - dead
   - sparks
   - heal
+  - rangedEnemy
   layers:
   - Default
   - TransparentFX

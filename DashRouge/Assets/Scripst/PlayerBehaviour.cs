@@ -49,9 +49,10 @@ public class PlayerBehaviour : MonoBehaviour
         if (enemy.tag == "enemy")
         {
             enemy.GetComponent<enemyScript>().takeDamage(playerDamage);
-
-            //Debug.Log(enemy.GetComponent<enemyScript>().health);
-            //this.GetComponent<Rigidbody>().velocity = Vector3.zero;
+        }
+        if (enemy.tag == "rangedEnemy")
+        {
+            enemy.GetComponent<RangedEnemy>().takeDamage(playerDamage);
         }
     }
 }

@@ -8584,6 +8584,10 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 803663570}
+    - target: {fileID: 4756692547963791660, guid: ab3dd10f3116dd747957b5bbcd253025, type: 3}
+      propertyPath: minDistanceForSwipe
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 4756692547963791661, guid: ab3dd10f3116dd747957b5bbcd253025, type: 3}
       propertyPath: m_Name
       value: Player

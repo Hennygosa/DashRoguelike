@@ -924,7 +924,7 @@ GameObject:
   - component: {fileID: 4956936160440117827}
   m_Layer: 0
   m_Name: RangedSpyder
-  m_TagString: Untagged
+  m_TagString: rangedEnemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -989,10 +989,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad39c143f8857d346ac78da79e11609f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 0}
   dropList: []
   heal: {fileID: 7769867335213461279, guid: 915c7b7f6849843428e754480e0f1fa7, type: 3}
   projectile: {fileID: 2802023400093184126, guid: 7ffc2e21f57aae44ca0b8654ea9deef4, type: 3}
-  health: 2
+  health: 10
 --- !u!195 &4956936160440117827
 NavMeshAgent:
   m_ObjectHideFlags: 0

@@ -6,7 +6,7 @@ using UnityEngine.AI;
 
 public class RangedEnemy : MonoBehaviour
 {
-    PlayerBehaviour player;
+    public PlayerBehaviour player;
     NavMeshAgent agent;
     public List<DropItem> dropList;
     public GameObject heal;

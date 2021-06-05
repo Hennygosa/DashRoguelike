@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Timers;
+using UnityEngine.EventSystems;
 
 public class DashMove : MonoBehaviour
 {
@@ -13,6 +14,9 @@ public class DashMove : MonoBehaviour
     private Vector3 touchPos, releasePos, swipeVector, lastPosition;
     private Rigidbody _rb;
     public LayerMask colMask;
+
+    [SerializeField]
+    private float minDistanceToSwipe = 2f;
 
     private ParticleSystem HitSparks;
 
@@ -60,41 +64,49 @@ public class DashMove : MonoBehaviour
 
     void Dash()
     {
-        if (Input.touchCount > 0)
+        foreach (Touch touch in Input.touches)
         {
-            Touch touch = Input.GetTouch(0);
-            Ray ray = Camera.main.ScreenPointToRay(touch.position);
-            RaycastHit hit;
-
-            //read swipe coordinates
-            switch (touch.phase)
+            int id = touch.fingerId;
+            if (!EventSystem.current.IsPointerOverGameObject(id))
             {
-                case TouchPhase.Began:
+                Ray ray = Camera.main.ScreenPointToRay(touch.position);
+                RaycastHit hit;
 
-                    if (Physics.Raycast(ray, out hit))
-                    {
-                        touchPos = hit.point;
-                    }
-                    touchPos.y = 0;
-                    break;
+                switch (touch.phase)
+                {
+                    case TouchPhase.Began:
 
-                case TouchPhase.Ended:
+                        if (Physics.Raycast(ray, out hit))
+                        {
+                            touchPos = hit.point;
+                        }
+                        touchPos.y = 0;
+                        break;
 
-                    if (Physics.Raycast(ray, out hit))
-                    {
-                        releasePos = hit.point;
-                    }
-                    releasePos.y = 0;
-                    swipeVector = (releasePos - touchPos).normalized;
-                    if (_rb.velocity.magnitude < 5f)
-                    {
-                        _rb.AddForce(swipeVector * player.Speed, ForceMode.Impulse);
-                    }
-                    break;
+                    case TouchPhase.Ended:
+
+                        if (Physics.Raycast(ray, out hit))
+                        {
+                            releasePos = hit.point;
+                        }
+                        releasePos.y = 0;
+                        swipeVector = releasePos - touchPos;
+                        if (swipeVector.magnitude > minDistanceToSwipe)
+                        {
+                            swipeVector.Normalize();
+                            if (_rb.velocity.magnitude < 5f)
+                            {
+                                _rb.AddForce(swipeVector * player.Speed, ForceMode.Impulse);
+                            }
+                            break;
+                        }
+                        swipeVector = Vector3.zero;
+                        break;
+                }
+            //}
             }
         }
     }
-
 
     void FixedUpdate()
     {
