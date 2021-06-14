@@ -11,7 +11,7 @@ public class DashMove : MonoBehaviour
     public PlayerBehaviour player;
     private double playerDamage = 1.2;
     public static float MaxSwipeLenght = 1f;
-    private Vector3 touchPos, releasePos, swipeVector, lastPosition;
+    private Vector3 touchPos, releasePos, swipeVector, lastPosition, currPos;
     private Rigidbody _rb;
     public LayerMask colMask;
 
@@ -20,11 +20,14 @@ public class DashMove : MonoBehaviour
 
     private ParticleSystem HitSparks;
 
+    private Animator animator;
+
     private void Start()
     {
         HitSparks = GetComponentInChildren<ParticleSystem>();
         lastPosition = transform.position;
         _rb = GetComponent<Rigidbody>();
+        animator = GetComponentInChildren<Animator>();
         //isMoving.Enqueue(false);// vosmozhno ubrat' nado, no poka pust' budet
         //isMoving.Enqueue(false);//
         //isMoving.Enqueue(false);//
@@ -44,18 +47,18 @@ public class DashMove : MonoBehaviour
                 player.timeLeft = 0;
             }
         }
-
+        if (_rb.velocity.magnitude > 1f) animator.SetBool("Dash", false);
         //if (transform.position != lastPosition)
         //{
-            //isMoving.Enqueue(true);
-            //isMoving.Dequeue();
-            //Debug.Log("äâèãàåòñÿ");
+        //isMoving.Enqueue(true);
+        //isMoving.Dequeue();
+        //Debug.Log("äâèãàåòñÿ");
         //}
         //else
         //{
-            //isMoving.Enqueue(false);
-            //isMoving.Dequeue();
-            //Debug.Log("íå äâèãàåòñÿ");
+        //isMoving.Enqueue(false);
+        //isMoving.Dequeue();
+        //Debug.Log("íå äâèãàåòñÿ");
         //}
 
         lastPosition = transform.position;
@@ -67,45 +70,71 @@ public class DashMove : MonoBehaviour
         foreach (Touch touch in Input.touches)
         {
             int id = touch.fingerId;
-            if (!EventSystem.current.IsPointerOverGameObject(id))
+            Ray ray = Camera.main.ScreenPointToRay(touch.position);
+            RaycastHit hit;
+
+            switch (touch.phase)
             {
-                Ray ray = Camera.main.ScreenPointToRay(touch.position);
-                RaycastHit hit;
+                case TouchPhase.Began:
 
-                switch (touch.phase)
-                {
-                    case TouchPhase.Began:
-
-                        if (Physics.Raycast(ray, out hit))
+                    if (Physics.Raycast(ray, out hit))
+                    {
+                        if (hit.point.z == 0)
                         {
-                            touchPos = hit.point;
+                            goto LoopEnd;
                         }
-                        touchPos.y = 0;
+                        touchPos = hit.point;
+                    }
+                    touchPos.y = 0;
+                    break;
+
+                case TouchPhase.Moved:
+                    if (Physics.Raycast(ray, out hit))
+                    {
+                        releasePos = hit.point;
+                    }
+                    releasePos.y = 0;
+                    swipeVector = releasePos - touchPos;                   
+                    animator.SetFloat("value", swipeVector.magnitude/5);
+                    swipeVector.Normalize();
+                    _rb.transform.LookAt(swipeVector * player.Speed);
+                    break;
+
+                case TouchPhase.Ended:
+
+                    if (Physics.Raycast(ray, out hit))
+                    {
+                        releasePos = hit.point;
+                    }
+                    releasePos.y = 0;
+                    swipeVector = releasePos - touchPos;
+                    if (swipeVector.magnitude > minDistanceToSwipe)
+                    {
+                        swipeVector.Normalize();
+                        if (_rb.velocity.magnitude < 5f)
+                        {
+                            _rb.AddForce(swipeVector * player.Speed, ForceMode.Impulse);
+                            System.Random random = new System.Random();
+                            animator.SetInteger("RandomAnimation", random.Next(1, 4));
+                            animator.SetBool("Dash", true);                
+                            _rb.transform.LookAt(swipeVector * player.Speed);
+                            animator.SetFloat("value", 0);
+                        }
                         break;
-
-                    case TouchPhase.Ended:
-
-                        if (Physics.Raycast(ray, out hit))
-                        {
-                            releasePos = hit.point;
-                        }
-                        releasePos.y = 0;
-                        swipeVector = releasePos - touchPos;
-                        if (swipeVector.magnitude > minDistanceToSwipe)
-                        {
-                            swipeVector.Normalize();
-                            if (_rb.velocity.magnitude < 5f)
-                            {
-                                _rb.AddForce(swipeVector * player.Speed, ForceMode.Impulse);
-                            }
-                            break;
-                        }
-                        swipeVector = Vector3.zero;
-                        break;
-                }
-            //}
+                    }
+                    //else
+                    //{
+                    //    //swipeVector.Normalize();
+                    //    var point = (releasePos - transform.position);
+                    //    _rb.MovePosition()
+                    //    break;
+                    //}
+                    swipeVector = Vector3.zero;
+                    break;
             }
         }
+    LoopEnd:
+        return;
     }
 
     void FixedUpdate()
@@ -138,13 +167,13 @@ public class DashMove : MonoBehaviour
                 {
                     HitSparks.Play();
                 }
-                break;    
+                break;
         }
     }
 
     public void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.tag == "heal")
+        if (other.gameObject.tag == "heal")
         {
             if (player.health < player.maxHealth)
             {
