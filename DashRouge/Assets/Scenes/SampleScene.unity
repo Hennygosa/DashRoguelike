@@ -1687,6 +1687,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 4756692549409984433}
   TextField: {fileID: 54198835}
+  TextField2: {fileID: 1746842740}
 --- !u!114 &796682475
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9180,6 +9181,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 4756692549409984433}
   TextField: {fileID: 1467472305}
+  TextField2: {fileID: 1485166192}
 --- !u!114 &2138418594
 MonoBehaviour:
   m_ObjectHideFlags: 0

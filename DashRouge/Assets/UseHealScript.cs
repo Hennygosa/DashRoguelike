@@ -8,15 +8,16 @@ public class UseHealScript : MonoBehaviour
 {
     public PlayerBehaviour player;
     public Text TextField;
+    public Text TextField2;
     public void useHeal()
     {
         if (player.health < player.maxHealth)
         {
             if (player.bonuses[1] > 0)
             {
-                Debug.Log("бонус работает");
                 player.bonuses[1]--;
                 TextField.text = player.bonuses[1] + "/3";
+                TextField2.text = player.bonuses[1] + "/3";
                 if (player.maxHealth - player.health <= player.healValue)
                 {
                     player.health = player.maxHealth;
