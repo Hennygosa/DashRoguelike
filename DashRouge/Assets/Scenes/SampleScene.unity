@@ -542,6 +542,7 @@ MonoBehaviour:
   prefabs:
   - {fileID: 5191518961595904804, guid: ff7c69ff2b80e7f468953db93ebc40ad, type: 3}
   - {fileID: 8434015901545980852, guid: de0ff6b2dd5a9f74c95f45bd03ac9fbc, type: 3}
+  - {fileID: 5475611033998201875, guid: 887d4341e2083584ea3e9168a1667e47, type: 3}
   map: {fileID: 1665834904}
   numberOfEnemies: 15
 --- !u!4 &126870509
