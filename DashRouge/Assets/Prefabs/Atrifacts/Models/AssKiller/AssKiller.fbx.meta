@@ -23,6 +23,11 @@ ModelImporter:
     second: "\u0410\u0440\u043C\u0430\u0442\u0443\u0440\u0430|Idle"
   externalObjects:
   - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: ErrorMat
+    second: {fileID: 2100000, guid: 02c1cff44c322fa4e9deaaa21f5ec3a2, type: 2}
+  - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: "\u0411\u0435\u0437 \u043D\u0430\u0437\u0432\u0430\u043D\u0438\u044F"
@@ -108,7 +113,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 0.01
+    globalScale: 1
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0

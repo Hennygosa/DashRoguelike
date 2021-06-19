@@ -81,6 +81,7 @@
     <Compile Include="Assets\Scripst\NavMeshBaker.cs" />
     <Compile Include="Assets\Scripst\SceneChange.cs" />
     <Compile Include="Assets\Scripst\CameraShake.cs" />
+    <Compile Include="Assets\Scripst\BossScripts\BossScripts.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
