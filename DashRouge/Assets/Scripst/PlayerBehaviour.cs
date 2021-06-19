@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class PlayerBehaviour : MonoBehaviour
 {
     public bool speedBoostFlag = false;
+    public int bonusMult = 1;
     public float timeLeft = 0;
     public float Speed = 100f;
     public Slider hpBar;
@@ -13,7 +14,7 @@ public class PlayerBehaviour : MonoBehaviour
     public double health = 50;
     public double playerDamage = 10;
     public GameObject spawnPoint;
-    public List<int> bonuses = new List<int>{ 0, 0, 0 };
+    public List<int> bonuses = new List<int> { 0, 0, 0 };
     public int Gold = 10;
     public double healValue = 3;
     public double maxHealth = 50;
@@ -28,9 +29,9 @@ public class PlayerBehaviour : MonoBehaviour
     }
 
     // Update is called once per frame
- 
+
     public void takeDamage(double damage)
-    {      
+    {
         health -= damage;
         hpBar.value = (float)health;
         textHealth.text = Mathf.Round((float)health).ToString() + '/' + hpBar.maxValue;
@@ -54,5 +55,10 @@ public class PlayerBehaviour : MonoBehaviour
         {
             enemy.GetComponent<RangedEnemy>().takeDamage(playerDamage);
         }
+        if (enemy.tag == "BossSpyder")
+        {
+            enemy.GetComponent<BossScripts>().takeDamage(playerDamage);
+        }
+
     }
 }

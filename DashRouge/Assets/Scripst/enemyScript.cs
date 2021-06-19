@@ -10,6 +10,7 @@ public class enemyScript : MonoBehaviour
     NavMeshAgent agent;
     public List<DropItem> dropList;
     public GameObject heal;
+    public GameObject coin;
 
     public double health = 2;
     private double attackDamage = 3.1;
@@ -22,7 +23,8 @@ public class enemyScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        dropList.Add(new DropItem(heal, 0));
+        dropList.Add(new DropItem(heal, 70));
+        dropList.Add(new DropItem(coin, 30));
 
         if (GameObject.FindGameObjectsWithTag("player").Length != 0)
             player = GameObject.FindGameObjectWithTag("player").GetComponent<PlayerBehaviour>();
@@ -41,7 +43,7 @@ public class enemyScript : MonoBehaviour
         //    transform.tag = "dead";
         //    Destroy(gameObject);
         //}
-        
+
         if (GameObject.FindGameObjectsWithTag("player").Length != 0)
             distance = Vector3.Distance(transform.position, player.transform.position);
         else
@@ -78,7 +80,7 @@ public class enemyScript : MonoBehaviour
         animator.Play("Crashing");
     }
 
-    
+
     void Move()
     {
         double distanceToPlayer;

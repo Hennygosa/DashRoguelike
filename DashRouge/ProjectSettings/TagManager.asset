@@ -11,6 +11,9 @@ TagManager:
   - sparks
   - heal
   - rangedEnemy
+  - BossSpyder
+  - jar
+  - boots
   layers:
   - Default
   - TransparentFX

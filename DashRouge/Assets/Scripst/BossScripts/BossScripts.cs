@@ -9,19 +9,23 @@ public class BossScripts : MonoBehaviour
     public PlayerBehaviour player;
     NavMeshAgent agent;
     public List<DropItem> dropList;
-    public GameObject heal;
+    public GameObject boots;
+    public GameObject claws;
+    public GameObject jar;
+    public GameObject headphones;
     public List<GameObject> SpawnObjects;
 
     public double health = 2;
     private double aggroRange = 30;
-    private double attackRange = 30;
+    private double attackRange = 10;
     private double attackRate = 0.5;
     private double attackCountdown = 0;
     private Animator animator;
     private bool костыл€мбаЌа”дар = false;
     void Start()
     {
-        dropList.Add(new DropItem(heal, 0));
+        dropList.Add(new DropItem(jar, 0));
+        dropList.Add(new DropItem(boots, 0));
 
         if (GameObject.FindGameObjectsWithTag("player").Length != 0)
             player = GameObject.FindGameObjectWithTag("player").GetComponent<PlayerBehaviour>();

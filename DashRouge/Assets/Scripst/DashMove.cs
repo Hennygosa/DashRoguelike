@@ -14,7 +14,9 @@ public class DashMove : MonoBehaviour
     private Vector3 touchPos, releasePos, swipeVector, lastPosition, currPos;
     private Rigidbody _rb;
     public LayerMask colMask;
+    public System.Random random = new System.Random();
 
+    [SerializeField] private SkinnedMeshRenderer playerSkin;
     [SerializeField]
     private float minDistanceToSwipe = 2f;
 
@@ -94,8 +96,8 @@ public class DashMove : MonoBehaviour
                         releasePos = hit.point;
                     }
                     releasePos.y = 0;
-                    swipeVector = releasePos - touchPos;                   
-                    animator.SetFloat("value", swipeVector.magnitude/5);
+                    swipeVector = releasePos - touchPos;
+                    animator.SetFloat("value", swipeVector.magnitude / 5);
                     swipeVector.Normalize();
                     _rb.transform.LookAt(swipeVector * player.Speed);
                     break;
@@ -114,9 +116,9 @@ public class DashMove : MonoBehaviour
                         if (_rb.velocity.magnitude < 5f)
                         {
                             _rb.AddForce(swipeVector * player.Speed, ForceMode.Impulse);
-                            System.Random random = new System.Random();
+                            //System.Random random = new System.Random();
                             animator.SetInteger("RandomAnimation", random.Next(1, 4));
-                            animator.SetBool("Dash", true);                
+                            animator.SetBool("Dash", true);
                             _rb.transform.LookAt(swipeVector * player.Speed);
                             animator.SetFloat("value", 0);
                         }
@@ -162,6 +164,11 @@ public class DashMove : MonoBehaviour
             //        }
             //    }
             //    break; vosmozhno ubrat' nado, no poka pust' budet
+            case "enemy":
+                {
+                    HitSparks.Play();
+                }
+                break;
 
             case "wall":
                 {
@@ -173,22 +180,75 @@ public class DashMove : MonoBehaviour
 
     public void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "heal")
+        switch (other.gameObject.tag)
         {
-            if (player.health < player.maxHealth)
-            {
-                Destroy(other.gameObject);
-                if (player.maxHealth - player.health <= player.healValue)
+            case "heal":
                 {
-                    player.health = player.maxHealth;
+                    if (player.health < player.maxHealth)
+                    {
+                        Destroy(other.gameObject);
+                        if (player.maxHealth - player.health <= player.healValue * player.bonusMult)
+                        {
+                            player.health = player.maxHealth;
+                        }
+                        else
+                        {
+                            player.health += player.healValue * player.bonusMult;
+                        }
+                        player.hpBar.value = (float)player.health;
+                        player.textHealth.text = Mathf.Round((float)player.health).ToString() + '/' + player.maxHealth;
+                    }
+                    break;
                 }
-                else
+
+            case "coin":
                 {
-                    player.health += player.healValue;
+                    Destroy(other.gameObject);
+                    player.Gold += 10 * player.bonusMult;
                 }
-                player.hpBar.value = (float)player.health;
-                player.textHealth.text = Mathf.Round((float)player.health).ToString() + '/' + player.maxHealth;
-            }
+                break;
+
+            case "boots":
+                {
+                    addClothes(other.gameObject);
+                    Destroy(other.gameObject);
+                    player.Speed = 150f;
+                }
+                break;
+
+            case "claws":
+                {
+                    addClothes(other.gameObject);
+                    Destroy(other.gameObject);
+                    player.playerDamage = 15;
+                }
+                break;
+            case "jar":
+                {
+                    addClothes(other.gameObject);
+                    Destroy(other.gameObject);
+                    player.maxHealth = 60;
+                    player.health = 60;
+                }
+                break;
+            case "headphones":
+                {
+                    addClothes(other.gameObject);
+                    Destroy(other.gameObject);
+                    player.bonusMult = 2;
+                }
+                break;
+        }
+    }
+
+    void addClothes(GameObject clothPrefab)
+    {
+        GameObject clothObj = Instantiate(clothPrefab, playerSkin.transform.parent);
+        SkinnedMeshRenderer[] renderers = clothObj.GetComponentsInChildren<SkinnedMeshRenderer>();
+        foreach (SkinnedMeshRenderer renderer in renderers)
+        {
+            renderer.bones = playerSkin.bones;
+            renderer.rootBone = playerSkin.rootBone;
         }
     }
 }
