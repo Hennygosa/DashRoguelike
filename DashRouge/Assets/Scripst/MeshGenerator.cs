@@ -8,6 +8,8 @@ public class MeshGenerator : MonoBehaviour
 	public MeshFilter walls;
 	public MeshFilter cave;
 
+	public Vector2[] highground;
+
 	public bool is2D;
 
 	List<Vector3> vertices; //vertices by position
@@ -108,7 +110,6 @@ public class MeshGenerator : MonoBehaviour
 			float percentY = Mathf.InverseLerp(-35 / 2, 35 / 2, wallVertices[i].y) * tileAmount;
 			uvs[i] = new Vector2(percentX, percentY);
 		}
-		Debug.Log("WallMeshArraySize: " + wallMesh.uv.Length);
 		wallMesh.uv = uvs;
 
 		MeshCollider wallCollider = walls.gameObject.AddComponent<MeshCollider>();

@@ -8227,6 +8227,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   walls: {fileID: 777517621}
   cave: {fileID: 35593048}
+  highground: []
   is2D: 0
 --- !u!114 &1665834908
 MonoBehaviour:
@@ -8244,7 +8245,7 @@ MonoBehaviour:
   height: 150
   seed: 
   useRandomSeed: 1
-  randomFillPercent: 42
+  randomFillPercent: 50
 --- !u!4 &1665834909
 Transform:
   m_ObjectHideFlags: 0

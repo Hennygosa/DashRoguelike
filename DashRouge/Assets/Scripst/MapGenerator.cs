@@ -10,11 +10,15 @@ public class MapGenerator : MonoBehaviour
 
     public string seed;
     public bool useRandomSeed;
+    
 
     [Range(0, 100)]
     public int randomFillPercent;
 
-    int[,] map;
+    public int[,] borderedMap;
+
+    public int[,] map;
+    
 
     void Start()
     {
@@ -49,12 +53,13 @@ public class MapGenerator : MonoBehaviour
                 {
                     borderedMap[x, y] = 1;
                 }
-
             }
         }
-
+        
+        
         MeshGenerator meshGen = GetComponent<MeshGenerator>();
         meshGen.GenerateMesh(borderedMap, 1);
+        
     }
 
     //get rid of isolated small walls/rooms
