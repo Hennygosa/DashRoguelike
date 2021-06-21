@@ -10,6 +10,8 @@ public class PlayerBehaviour : MonoBehaviour
     public float timeLeft = 0;
     public float Speed = 100f;
     public Slider hpBar;
+    public Image fill;
+    public Gradient gradient;
     public Text textHealth;
     public double health = 50;
     public double playerDamage = 10;
@@ -22,8 +24,9 @@ public class PlayerBehaviour : MonoBehaviour
     void Start()
     {
         textHealth.text = health.ToString();
-        hpBar.maxValue = (float)health;
+        hpBar.maxValue = (float)maxHealth;
         hpBar.value = (float)health;//Изменить для сохранения хп между уровнями
+        fill.color = gradient.Evaluate(1f);
         spawnPoint = GameObject.Find("PlayerSpawnPoint");
         transform.position = spawnPoint.transform.position;
     }
@@ -33,8 +36,7 @@ public class PlayerBehaviour : MonoBehaviour
     public void takeDamage(double damage)
     {
         health -= damage;
-        hpBar.value = (float)health;
-        textHealth.text = Mathf.Round((float)health).ToString() + '/' + hpBar.maxValue;
+        UpdateHp();
         if (health < 0)
         {
             transform.tag = "dead";
@@ -43,6 +45,13 @@ public class PlayerBehaviour : MonoBehaviour
         }
 
         //Debug.Log("получил урон игрок, хп =" + health);
+    }
+    public void UpdateHp()
+    {
+        hpBar.maxValue = (float)maxHealth;
+        hpBar.value = (float)health;
+        textHealth.text = Mathf.Round((float)health).ToString() + '/' + maxHealth;
+        fill.color = gradient.Evaluate(hpBar.normalizedValue);
     }
     private void OnCollisionEnter(Collision other)
     {

@@ -6,7 +6,7 @@ using UnityEngine.AI;
 
 public class enemyScript : MonoBehaviour
 {
-    public PlayerBehaviour player;
+    private PlayerBehaviour player;
     NavMeshAgent agent;
     public List<DropItem> dropList;
     public GameObject heal;
@@ -14,7 +14,7 @@ public class enemyScript : MonoBehaviour
 
     public double health = 2;
     private double attackDamage = 3.1;
-    private double aggroRange = 15;
+    private double aggroRange = 20;
     private double attackRange = 3;
     private double attackRate = 1;
     private double attackCountdown = 0;

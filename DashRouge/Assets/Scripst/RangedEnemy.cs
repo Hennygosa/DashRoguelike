@@ -13,7 +13,7 @@ public class RangedEnemy : MonoBehaviour
     public GameObject projectile;
 
     public double health = 2;
-    private double aggroRange = 15;
+    private double aggroRange = 20;
     private double attackRange = 10;
     private double attackRate = 0.5;
     private double attackCountdown = 0;

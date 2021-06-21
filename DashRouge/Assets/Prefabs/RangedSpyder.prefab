@@ -992,7 +992,7 @@ MonoBehaviour:
   player: {fileID: 0}
   dropList: []
   heal: {fileID: 7769867335213461279, guid: 915c7b7f6849843428e754480e0f1fa7, type: 3}
-  projectile: {fileID: 2802023400093184126, guid: 7ffc2e21f57aae44ca0b8654ea9deef4, type: 3}
+  projectile: {fileID: 5865926490957167030, guid: def3456c558ae68458d23956b8df7082, type: 3}
   health: 10
 --- !u!195 &4956936160440117827
 NavMeshAgent:
