@@ -195,8 +195,7 @@ public class DashMove : MonoBehaviour
                         {
                             player.health += player.healValue * player.bonusMult;
                         }
-                        player.hpBar.value = (float)player.health;
-                        player.textHealth.text = Mathf.Round((float)player.health).ToString() + '/' + player.maxHealth;
+                        player.UpdateHp();
                     }
                     break;
                 }
@@ -205,6 +204,7 @@ public class DashMove : MonoBehaviour
                 {
                     Destroy(other.gameObject);
                     player.Gold += 10 * player.bonusMult;
+                    player.UpdateMoney();
                 }
                 break;
 
@@ -229,6 +229,7 @@ public class DashMove : MonoBehaviour
                     Destroy(other.gameObject);
                     player.maxHealth = 60;
                     player.health = 60;
+                    player.UpdateHp();
                 }
                 break;
             case "headphones":

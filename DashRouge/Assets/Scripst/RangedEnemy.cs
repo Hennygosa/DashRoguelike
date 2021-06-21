@@ -11,9 +11,10 @@ public class RangedEnemy : MonoBehaviour
     public List<DropItem> dropList;
     public GameObject heal;
     public GameObject projectile;
+    public GameObject coin;
 
     public double health = 2;
-    private double aggroRange = 15;
+    private double aggroRange = 20;
     private double attackRange = 10;
     private double attackRate = 0.5;
     private double attackCountdown = 0;
@@ -21,7 +22,8 @@ public class RangedEnemy : MonoBehaviour
     private bool костыл€мбаЌа”дар = false;
     void Start()
     {
-        dropList.Add(new DropItem(heal, 0));
+        dropList.Add(new DropItem(heal, 70));
+        dropList.Add(new DropItem(coin, 30));
 
         if (GameObject.FindGameObjectsWithTag("player").Length != 0)
             player = GameObject.FindGameObjectWithTag("player").GetComponent<PlayerBehaviour>();
@@ -112,7 +114,7 @@ public class RangedEnemy : MonoBehaviour
             {
                 if (item.chance < rnd)
                 {
-                    item.CreateDropItem(gameObject.transform.position);
+                    item.CreateDropItem(new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 1, gameObject.transform.position.z));
                     return;
                 }
             }

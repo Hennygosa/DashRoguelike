@@ -19,6 +19,7 @@ public class healButtonScript : MonoBehaviour
             TextField.text = player.bonuses[1] + "/3";
             TextField2.text = player.bonuses[1] + "/3";
             player.Gold -= 3;
+            player.UpdateMoney();
         }
     }
 }

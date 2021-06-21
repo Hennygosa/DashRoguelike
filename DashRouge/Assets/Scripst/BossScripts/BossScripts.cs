@@ -17,7 +17,7 @@ public class BossScripts : MonoBehaviour
 
     public double health = 2;
     private double aggroRange = 30;
-    private double attackRange = 10;
+    private double attackRange = 20;
     private double attackRate = 0.5;
     private double attackCountdown = 0;
     private Animator animator;
