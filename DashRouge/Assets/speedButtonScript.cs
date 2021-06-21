@@ -19,6 +19,7 @@ public class speedButtonScript : MonoBehaviour
             TextField.text = player.bonuses[0] + "/3";
             TextField2.text = player.bonuses[0] + "/3";
             player.Gold -= 3;
+            player.UpdateMoney();
         }
     }
 }

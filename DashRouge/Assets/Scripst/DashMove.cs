@@ -204,6 +204,7 @@ public class DashMove : MonoBehaviour
                 {
                     Destroy(other.gameObject);
                     player.Gold += 10 * player.bonusMult;
+                    player.UpdateMoney();
                 }
                 break;
 

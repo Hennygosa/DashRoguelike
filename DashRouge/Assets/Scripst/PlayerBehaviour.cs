@@ -12,7 +12,7 @@ public class PlayerBehaviour : MonoBehaviour
     public Slider hpBar;
     public Image fill;
     public Gradient gradient;
-    public Text textHealth;
+    public Text textHealth,textMoney1, textMoney2;
     public double health = 50;
     public double playerDamage = 10;
     public GameObject spawnPoint;
@@ -24,6 +24,8 @@ public class PlayerBehaviour : MonoBehaviour
     void Start()
     {
         textHealth.text = health.ToString();
+        textMoney1.text = Gold.ToString();
+        textMoney2.text = Gold.ToString();
         hpBar.maxValue = (float)maxHealth;
         hpBar.value = (float)health;//Изменить для сохранения хп между уровнями
         fill.color = gradient.Evaluate(1f);
@@ -52,6 +54,11 @@ public class PlayerBehaviour : MonoBehaviour
         hpBar.value = (float)health;
         textHealth.text = Mathf.Round((float)health).ToString() + '/' + maxHealth;
         fill.color = gradient.Evaluate(hpBar.normalizedValue);
+    }
+    public void UpdateMoney()
+    {
+        textMoney1.text = Gold.ToString();
+        textMoney2.text = Gold.ToString();
     }
     private void OnCollisionEnter(Collision other)
     {

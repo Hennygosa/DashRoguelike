@@ -117,7 +117,7 @@ public class enemyScript : MonoBehaviour
             {
                 if (item.chance < rnd)
                 {
-                    item.CreateDropItem(gameObject.transform.position);
+                    item.CreateDropItem(new Vector3(gameObject.transform.position.x, gameObject.transform.position.y+1, gameObject.transform.position.z));
                     return;
                 }
             }

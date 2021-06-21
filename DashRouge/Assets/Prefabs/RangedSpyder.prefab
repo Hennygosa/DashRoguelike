@@ -991,8 +991,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   dropList: []
-  heal: {fileID: 7769867335213461279, guid: 915c7b7f6849843428e754480e0f1fa7, type: 3}
+  heal: {fileID: 2310553419395412532, guid: 915c7b7f6849843428e754480e0f1fa7, type: 3}
   projectile: {fileID: 5865926490957167030, guid: def3456c558ae68458d23956b8df7082, type: 3}
+  coin: {fileID: 2896567554953449605, guid: 20d2887839282ab458628b45e3e369e7, type: 3}
   health: 10
 --- !u!195 &4956936160440117827
 NavMeshAgent:

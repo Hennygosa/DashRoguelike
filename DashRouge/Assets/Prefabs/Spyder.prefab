@@ -1681,7 +1681,7 @@ GameObject:
   - component: {fileID: 8776052324651717126}
   - component: {fileID: 8776052324651717127}
   m_Layer: 0
-  m_Name: "\u043F\u0430\u0432\u0443\u043A3"
+  m_Name: Spyder
   m_TagString: enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1747,9 +1747,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e582e3ef3496a624da402fee9b2597d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
   dropList: []
-  heal: {fileID: 7769867335213461279, guid: 915c7b7f6849843428e754480e0f1fa7, type: 3}
+  heal: {fileID: 2310553419395412532, guid: 915c7b7f6849843428e754480e0f1fa7, type: 3}
+  coin: {fileID: 2896567554953449605, guid: 20d2887839282ab458628b45e3e369e7, type: 3}
   health: 10
 --- !u!195 &8776052324651717127
 NavMeshAgent:
