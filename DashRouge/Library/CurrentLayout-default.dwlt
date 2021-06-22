@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 1920
     height: 997
   m_ShowMode: 4
-  m_Title: Console
+  m_Title: Hierarchy
   m_RootView: {fileID: 2}
   m_MinSize: {x: 875, y: 392}
   m_MaxSize: {x: 10000, y: 10000}
@@ -121,10 +121,10 @@ MonoBehaviour:
     y: 30
     width: 1920
     height: 947
-  m_MinSize: {x: 1107, y: 342}
-  m_MaxSize: {x: 26002, y: 10000}
+  m_MinSize: {x: 1113, y: 342}
+  m_MaxSize: {x: 26008, y: 10021}
   vertical: 0
-  controlID: 25087
+  controlID: 1405
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -172,10 +172,10 @@ MonoBehaviour:
     y: 0
     width: 899
     height: 947
-  m_MinSize: {x: 402, y: 342}
-  m_MaxSize: {x: 8002, y: 8042}
+  m_MinSize: {x: 404, y: 342}
+  m_MaxSize: {x: 8004, y: 8042}
   vertical: 1
-  controlID: 25175
+  controlID: 1343
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -197,10 +197,10 @@ MonoBehaviour:
     y: 0
     width: 899
     height: 781
-  m_MinSize: {x: 402, y: 221}
-  m_MaxSize: {x: 8002, y: 4021}
+  m_MinSize: {x: 404, y: 221}
+  m_MaxSize: {x: 8004, y: 4021}
   vertical: 0
-  controlID: 25176
+  controlID: 1344
 --- !u!114 &9
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -450,9 +450,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: ba6a0000
-      m_LastClickedID: 27322
-      m_ExpandedIDs: 9ee9fcff86f4fdff0c16feff2074feffc06fffff76c4ffff4ec6ffffd2caffff8ecbffff52fbffff3a3b0000ee5000004c6b0000
+      m_SelectedIDs: 54940000
+      m_LastClickedID: 37972
+      m_ExpandedIDs: 28ddffff3edeffff4cdfffff54e0ffff92edffff9eeefffff4effffff6f0ffffcaf3ffffd8f4ffffa0f5ffff68f6ffff40f7ffff58f7ffff20f8ffffe8f8ffffacf9ffff84faffff52fbffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -624,9 +624,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 3.2838793, y: -130.25275, z: 100.5385}
+    m_Target: {x: -8.64878, y: -94.745224, z: 130.23236}
     speed: 2
-    m_Value: {x: 3.2838793, y: -130.25275, z: 100.5385}
+    m_Value: {x: -8.64878, y: -94.745224, z: 130.23236}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -677,9 +677,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: -0.33999723, y: -0.0058325883, z: -0.00006557979, w: -0.9406984}
   m_Size:
-    m_Target: 123.613815
+    m_Target: 108.699524
     speed: 2
-    m_Value: 123.613815
+    m_Value: 108.699524
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -767,22 +767,22 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Prefabs/Atrifacts/Models
+    - Assets/Scenes
     m_Globs: []
     m_OriginalText: 
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Prefabs/Atrifacts/Models
+  - Assets/Scenes
   m_LastFoldersGridSize: -1
-  m_LastProjectPath: C:\Users\nohri\Desktop\DashRoguelike\DashRouge
+  m_LastProjectPath: C:\Users\Henny\Documents\GitHub\DashRoguelike\DashRouge
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 0e430000
-    m_LastClickedID: 17166
-    m_ExpandedIDs: 000000006e4200007e4200008842000000ca9a3b
+    m_SelectedIDs: bc3c0000
+    m_LastClickedID: 15548
+    m_ExpandedIDs: 00000000a43c0000a63c0000a83c000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -810,7 +810,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 000000006e4200007e42000000ca9a3b
+    m_ExpandedIDs: 00000000a43c0000a63c0000a83c000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -837,7 +837,7 @@ MonoBehaviour:
   m_ListAreaState:
     m_SelectedInstanceIDs: 
     m_LastClickedInstanceID: 0
-    m_HadKeyboardFocusLastEvent: 0
+    m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs: c623000092410000be5200006c560000ca3e00008a4e000000000000
     m_RenameOverlay:
       m_UserAcceptedRename: 0

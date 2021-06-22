@@ -544,7 +544,7 @@ MonoBehaviour:
   - {fileID: 5191518961595904804, guid: ff7c69ff2b80e7f468953db93ebc40ad, type: 3}
   - {fileID: 8434015901545980852, guid: de0ff6b2dd5a9f74c95f45bd03ac9fbc, type: 3}
   map: {fileID: 1665834904}
-  numberOfEnemies: 15
+  numberOfEnemies: 7
 --- !u!4 &126870509
 Transform:
   m_ObjectHideFlags: 0
@@ -2313,7 +2313,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &958144018
 Transform:
   m_ObjectHideFlags: 0
@@ -2322,7 +2322,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 958144017}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.4, y: 0, z: -18.3}
+  m_LocalPosition: {x: 0.4, y: -10, z: 69}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1674381078}
@@ -2354,7 +2354,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0cf44a80fde2e04abf0c56437876f42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nextSceneName: Level02
+  numberOfEnemies: 0
 --- !u!114 &958144021
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8237,6 +8237,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   walls: {fileID: 777517621}
   cave: {fileID: 35593048}
+  highground: []
   is2D: 0
 --- !u!114 &1665834908
 MonoBehaviour:
